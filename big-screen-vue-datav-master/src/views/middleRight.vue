@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-11-07 12:25:30
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-10 23:49:49
+ * @LastEditTime : 2021-11-12 22:28:20
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\views\middleRight.vue
 -->
@@ -14,7 +14,7 @@
           <icon name="chart-area" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2"> 你钉我办满意度统计</span>
+          <span class="fs-xxxl text mx-2"> 你钉我办满意度统计</span>
           <div class="decoration2">
             <dv-decoration-2 :reverse="true" style="width:5px;height:6rem;" />
           </div>

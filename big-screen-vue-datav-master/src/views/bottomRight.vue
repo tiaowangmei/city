@@ -2,25 +2,25 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-11 00:30:13
+ * @LastEditTime : 2021-11-14 22:59:17
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\views\bottomRight.vue
 -->
 <template>
-  <div id="bottomRight">
-    <div class="bg-color-black">
+  <div id="bottomRight" style="width:100%;height:100%">
+    <div class="bg-color-black" style="width:100%;height:100%">
       <div class="d-flex pt-2 pl-2">
         <span>
           <icon name="chart-area" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2"> 你钉我办满意度统计</span>
+          <span class="fs-xxxl text mx-2"> 群防群治</span>
           <div class="decoration2">
             <dv-decoration-2 :reverse="true" style="width:5px;height:6rem;" />
           </div>
         </div>
       </div>
-      <div>
+      <div style="width:100%;height:calc(100% - 50px)">
         <BottomRightChart />
       </div>
     </div>
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" class>
-$box-height: 300px;
+$box-height: 100%;
 $box-width: 100%;
 #bottomRight {
   padding: 14px 16px;
@@ -45,7 +45,7 @@ $box-width: 100%;
   width: $box-width;
   border-radius: 5px;
   .bg-color-black {
-    height: $box-height - 30px;
+    height: 100%;
     border-radius: 10px;
   }
   .text {

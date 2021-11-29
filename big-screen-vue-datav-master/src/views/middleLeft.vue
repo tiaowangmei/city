@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-11-07 12:25:41
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-11 01:02:30
+ * @LastEditTime : 2021-11-12 22:28:14
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\views\middleLeft.vue
 -->
@@ -14,7 +14,7 @@
           <icon name="chart-bar" class="text-icon"></icon>
         </span>
         <div class="d-flex" v-if="false">
-          <span class="fs-xl text mx-2">矛盾纠纷解决统计图</span>
+          <span class="fs-xxxl text mx-2">矛盾纠纷解决统计图</span>
         </div>
       </div>
       <div>

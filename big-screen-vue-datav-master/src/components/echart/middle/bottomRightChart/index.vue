@@ -1,5 +1,13 @@
+<!--
+ * @Author       : meiling.Wu
+ * @Date         : 2021-11-10 23:49:35
+ * @LastEditors  : meiling.Wu
+ * @LastEditTime : 2021-11-14 23:04:50
+ * @Description  : 
+ * @FilePath     : \big-screen-vue-datav-master\src\components\echart\middle\bottomRightChart\index.vue
+-->
 <template>
-  <div>
+  <div style="width:100%;height:100%">
     <Chart :cdata="cdata" />
   </div>
 </template>

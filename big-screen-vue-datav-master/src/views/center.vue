@@ -63,7 +63,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 26
+              fontSize: 36
             }
           }
         },
@@ -75,7 +75,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 26
+              fontSize: 36
             }
           }
         },
@@ -87,7 +87,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 26
+              fontSize: 36
             }
           }
         },
@@ -99,7 +99,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 26
+              fontSize: 36
             }
           }
         },
@@ -111,7 +111,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 26
+              fontSize: 36
             }
           }
         },
@@ -123,7 +123,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 26
+              fontSize: 36
             }
           }
         }

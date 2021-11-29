@@ -1,3 +1,11 @@
+/*
+ * @Author       : meiling.Wu
+ * @Date         : 2021-10-19 14:38:50
+ * @LastEditors  : meiling.Wu
+ * @LastEditTime : 2021-11-22 19:46:56
+ * @Description  : 
+ * @FilePath     : \big-screen-vue-datav-master\src\utils\drawMixin.js
+ */
 // 屏幕适配 mixin 函数
 
 // * 默认缩放值
@@ -11,7 +19,7 @@ const baseWidth = 1920
 const baseHeight = 1080
 
 // * 需保持的比例（默认1.77778）
-const baseProportion = parseFloat((baseWidth / baseHeight).toFixed(5))
+const baseProportion = parseFloat((baseWidth / baseHeight).toFixed(5))*1
 
 export default {
   data() {

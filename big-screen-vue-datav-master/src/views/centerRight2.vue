@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-08 19:35:43
+ * @LastEditTime : 2021-11-12 22:27:55
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\views\centerRight2.vue
 -->
@@ -13,7 +13,7 @@
         <span>
           <icon name="align-left" class="text-icon"></icon>
         </span>
-        <span class="fs-xl text mx-2">乡风文明</span>
+        <span class="fs-xxxl text mx-2">乡风文明</span>
       </div>
       <div class="d-flex ai-center flex-column body-box">
         <dv-capsule-chart class="dv-cap-chart" :config="config" />
@@ -61,8 +61,8 @@ export default {
 
 <style lang="scss" scoped>
 #centerRight2 {
-  $box-height: 370px;
-  $box-width: 685px;
+  $box-height: 100%;
+  $box-width: 100%;
   padding: 5px;
   height: $box-height;
   width: $box-width;

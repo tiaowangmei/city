@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-10 12:36:28
+ * @LastEditTime : 2021-11-23 21:19:18
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\components\echart\centerLeft\centerLeft1Chart\index.vue
 -->
@@ -34,9 +34,6 @@ export default {
     Chart,
   },
   mounted () {
-      console.log("this.$axios",this)
-    
-      this.axios.post('/ding/approveDetail/getInfo?corpId=ding0b3219e0d629f0acf5bf40eda33b7ba0', {corpId: 'ding0b3219e0d629f0acf5bf40eda33b7ba0'}).then(res =>{console.log(res)})},
   methods: {
 
   }

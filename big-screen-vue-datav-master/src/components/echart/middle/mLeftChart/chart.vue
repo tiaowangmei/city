@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-11 01:03:25
+ * @LastEditTime : 2021-11-14 21:15:11
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\components\echart\middle\mLeftChart\chart.vue
 -->
@@ -12,7 +12,7 @@
     <Echart
       :options="options"
       id="mLeftChart"
-      height="290px"
+      height="270px"
       width="100%"
     ></Echart>
   </div>
@@ -59,7 +59,11 @@ export default {
       label: {
         backgroundColor: '#6a7985'
       }
-    }
+    },
+     textStyle: { //数值样式
+                                    color: '#fff',
+                                    fontSize: 36
+                                }
   },
   legend: {
     data:val.category

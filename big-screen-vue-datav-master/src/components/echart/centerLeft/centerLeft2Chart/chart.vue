@@ -1,13 +1,16 @@
 <template>
-  <div>
+  <div style="width:100%;height:100%">
     <Echart
       id="centreLeft2Chart"
       ref="centreLeft2ChartRef"
       :options="options"
-      height="300px"
-      width="1200px"
+      height="400px"
+      width="100%"
+      @handleMapRandomSelect= 'handleMapRandomSelect'
+      :isPic='isPic'
     >
     </Echart>
+     <!-- <div id="centreLeft2Chart" class="chart" :style="{ height: h, width: w }" /> -->
   </div>
 </template>
 
@@ -17,6 +20,13 @@ export default {
   data() {
     return {
       options: {},
+      w:document.documentElement.clientWidth*1+'px',
+      h:document.documentElement.clientHeight*1+'px',
+      allData:[],
+      orgBranch:[],
+      city:{},
+      isPic:'',
+      dataList:[]
     };
   },
   components: {
@@ -30,109 +40,121 @@ export default {
   },
   watch: {
     cdata: {
-      handler(newData) {
-        // 设置点的位置(经纬度)
-        const geoCoordMap = {
-          零陵区:[111.626348,26.223347]
+      handler() {
+         
+        },
+      immediate: true,
+      deep: true,
+    },
+  },
+  mounted(){
+        let query=this.$route.query;
+            let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
+             this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
+                 let d = re.data.data.orgBranch
+                 if(d.length == 1){
+                      this.$store.commit("setInitId", d[0].parentId)
+                 }else{
+                      this.$store.commit("setInitId",corpId)
+                 }
+                 this.$store.commit("setSubId",corpId)
+                 this.getData(corpId)
+                 this.getB(corpId)
+                this. getOption(this.$store.state.initId)
+             })
+  },
+  methods: {
+     getOption(corpId){
+         this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(res=>{
+           this.orgBranch = res.data.data.orgBranch 
+         this.isPic=  res.data.data.orgBranch.filter(val=>{return val.unionCorpid == corpId})[0].unionOrgName
+           this.city =  this.orgBranch.map(val=>{
+           let normal ={}
+           normal.areaColor = val.id<5?'#00DB00':val.id<20?'#00E3E3':val.id<30?'#FF2D2D':'#FFD306'
+              return {
+                  name:val.unionOrgName,
+                  value:val.id,
+                  flag:val.orgName|| '',
+                  itemStyle:{
+                       normal:normal
+                  }
 
-        };
-        let seriesData = [
-          {
-            name: '零陵区',
-          }
-        ];
-        let convertData = function (data) {
-          let scatterData = [];
-          for (var i = 0; i < data.length; i++) {
-            var geoCoord = geoCoordMap[data[i].name];
-            if (geoCoord) {
-              scatterData.push({
-                name: data[i].name,
-                value: geoCoord.concat(data[i].value),
-              });
-            }
-          }
-          return scatterData;
-        };
-        
-           console.log("convertData",convertData)
+              }
+          })
         this.options = {
+           backgroundColor: 'transparent',
           showLegendSymbol: true,
-          layoutCenter: ['50%', '50%'],
-          aspectScale: 0.1, //长宽比
-          zoom: 1.2,
-          layoutSize: 400,
+          layoutCenter :['50%', '50%'],
+           aspectScale: 2, //长宽比
+           zoom: 12,
+          layoutSize: '100%',
           tooltip: {
             trigger: 'item',
             textStyle: {
-              fontSize: 14,
+              fontSize: 10,
               lineHeight: 22,
             },
-            position: point => {
-              // 固定在顶部
-              return [point[0] + 50, point[1] - 20];
-            },
-            // 如果需要自定义 tooltip样式，需要使用formatter
-            /*
-              formatter: params => {
-                return `<div style=""> ... </div>`
-              }
-            */
+            "formatter": (p)=>{
+                console.log("0",p)
+                 let dataCon = p.data,
+                  txtCon = `${dataCon.name}`
+                  return txtCon
+            }
           },
           visualMap: {
             min: 0,
-            max: 10,
+            max: 100,
             show: false,
             seriesIndex: 0,
+            text:['High','Low'],
             // 颜色
+            realtime: false,
+            calculable: true,
             inRange: {
-              color: ['rgba(41,166,206, .5)', 'rgba(69,117,245, .9)'],
+                color: ['#00DB00', '#00E3E3','#FF2D2D','#FFD306']
             },
           },
           // 底部背景
           geo: {
-            show: true,
-            aspectScale: 0.85, //长宽比
-            zoom: 1.2,
-            top: '10%',
-            left: '16%',
-            map: '零陵区',
-            roam: false,
-            itemStyle: {
-              normal: {
-                areaColor: 'rgba(0,0,0,0)',
-                shadowColor: 'rgba(7,114,204, .8)',
-                shadowOffsetX: 5,
-                shadowOffsetY: 5,
-              },
-              emphasis: {
-                areaColor: '#00aeef',
-              },
+            roam : true,//是否开启缩放和平移
+            map : this.isPic,//地图名称
+           label: {
+            emphasis: {
+                show: false
+            }
+        },
+        itemStyle: {
+            normal: {
+                areaColor: 'transparent',
+                borderColor: 'transparent'
             },
+            emphasis: {
+                areaColor: 'transparent',
+                borderColor: 'transparent'
+            }
+        }
           },
           series: [
             {
-              name: '相关指数',
-              type: 'map',
-              aspectScale: 0.85, //长宽比
-              zoom: 1.2,
-              mapType: '零陵区', // 自定义扩展图表类型
+            bevelSmoothness: 20,
+            type: "map",
+             componentType:'geo',
+              mapType: this.isPic, // 自定义扩展图表类型
               top: '10%',
-              left: '16%',
+              left: '10%',
               itemStyle: {
                 normal: {
-                  color: 'red',
-                  areaColor: 'rgba(19,54,162, .5)',
+                  areaColor: '#d00',
                   borderColor: 'rgba(0,242,252,.3)',
-                  borderWidth: 1,
-                  shadowBlur: 7,
+                  borderWidth:2,
+                  shadowBlur: 1,
                   shadowColor: '#00f2fc',
                 },
                 emphasis: {
                   areaColor: '#4f7fff',
                   borderColor: 'rgba(0,242,252,.6)',
                   borderWidth: 2,
-                  shadowBlur: 10,
+                  shadowBlur: 1,
                   shadowColor: '#00f2fc',
                 },
               },
@@ -141,7 +163,7 @@ export default {
                 show: true,
                 position: 'insideRight',
                 textStyle: {
-                  fontSize: 14,
+                  fontSize: 10,
                   color: '#efefef',
                 },
                 emphasis: {
@@ -150,121 +172,238 @@ export default {
                   },
                 },
               },
+               data:this.city
             },
-            {
-              type: 'effectScatter',
-              coordinateSystem: 'geo',
-              symbolSize: 7,
-              effectType: 'ripple',
-              legendHoverLink: false,
-              showEffectOn: 'render',
-              rippleEffect: {
-                period: 4,
-                scale: 2.5,
-                brushType: 'stroke',
-              },
-              zlevel: 1,
-              itemStyle: {
-                normal: {
-                  color: '#99FBFE',
-                  shadowBlur: 5,
-                  shadowColor: '#fff',
-                },
-              },
-              data: [{
-                  name:'七里店街道',
-                  value:[111.554641,26.129991]
-              }],
-            },
+           
           ],
+          
         };
-        console.log("newData",newData)
-        console.log("convertData(seriesData)",convertData(seriesData))
-        // 重新选择区域
-        this.handleMapRandomSelect();
+           })
+    
+     },
+
+      getB(id){
+       this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
+            this.orgBranch = res.data.data.orgBranch
+            let data = []
+            this.orgBranch.forEach(val=>{
+                let d = {
+                    name:val.unionOrgName,
+                    value:[val.lng,val.lat]
+                }
+                if(val.lng){
+                    data.push(d)
+                }
+            })
+            // if(data.length > 0 &&  this.orgBranch[0].unionOrgName == "七里店街道"){
+            let src =  {
+                        name:'',
+                        type: 'effectScatter',
+                        label: {
+                        formatter: params => `${params.name}`,
+                        show: true,
+                        position: 'insideRight',
+                        textStyle: {
+                        fontSize: 10,
+                        color: '#f4e925',
+                        },
+                        emphasis: {
+                        textStyle: {
+                            color: '#d00',
+                            },
+                        },
+                            },
+                            geoIndex:0,
+                            data:data,
+                            coordinateSystem: 'geo',
+                            symbolSize: 15,
+                            showEffectOn: 'render',
+                            rippleEffect: {
+                                brushType: 'stroke'
+                            },
+                            hoverAnimation: true,
+                            animation:false,
+                            itemStyle: {
+                                normal: {
+                                    color: '#f4e925',
+                                    shadowBlur: 10,
+                                    shadowColor: '#333'
+                                }
+                            },
+                            zlevel: 6,
+                            zoom :7
+                        }
+                this.options.series.push(src)
+            // }
+        })
       },
-      immediate: true,
-      deep: true,
-    },
-  },
-  methods: {
-    // 开启定时器
-    startInterval() {
-      const _self = this;
-      // 应通过接口获取配置时间，暂时写死5s
-      const time = 2000;
-      if (this.intervalId !== null) {
-        clearInterval(this.intervalId);
-      }
-      this.intervalId = setInterval(() => {
-        _self.reSelectMapRandomArea();
-      }, time);
-    },
-    // 重新随机选中地图区域
-    reSelectMapRandomArea() {
-      const length = 9;
+
+    handleMapRandomSelect(params) {
       this.$nextTick(() => {
         try {
-          const map = this.$refs.centreLeft2ChartRef.chart;
-          let index = Math.floor(Math.random() * length);
-          while (index === this.preSelectMapIndex || index >= length) {
-            index = Math.floor(Math.random() * length);
-          }
-          map.dispatchAction({
-            type: 'mapUnSelect',
-            seriesIndex: 0,
-            dataIndex: this.preSelectMapIndex,
-          });
-          map.dispatchAction({
-            type: 'showTip',
-            seriesIndex: 0,
-            dataIndex: index,
-          });
-          map.dispatchAction({
-            type: 'mapSelect',
-            seriesIndex: 0,
-            dataIndex: index,
-          });
-          this.preSelectMapIndex = index;
-        } catch (error) {
-          console.log(error)
-        }
-      });
-    },
-    handleMapRandomSelect() {
-      this.$nextTick(() => {
-        try {
-          const map = this.$refs.centreLeft2ChartRef.chart;
           const _self = this;
           setTimeout(() => {
             _self.reSelectMapRandomArea();
           }, 0);
           // 移入区域，清除定时器、取消之前选中并选中当前
-          map.on('mouseover', function (params) {
             clearInterval(_self.intervalId);
-            map.dispatchAction({
-              type: 'mapUnSelect',
-              seriesIndex: 0,
-              dataIndex: _self.preSelectMapIndex,
-            });
-            map.dispatchAction({
-              type: 'mapSelect',
-              seriesIndex: 0,
-              dataIndex: params.dataIndex,
-            });
             _self.preSelectMapIndex = params.dataIndex;
-          });
-          // 移出区域重新随机选中地图区域，并开启定时器
-          map.on('globalout', function () {
-            _self.reSelectMapRandomArea();
-            _self.startInterval();
-          });
-          this.startInterval();
+              _self.options.series[0].layoutCenter = ['50%', '50%'];
+             _self.options.visualMap.type = 'piecewise'
+             this.isPic = params.name
+              _self.getData(params.name,1)
+              _self.getB(this.$store.state.id)
         } catch (error) {
           console.log(error)
         }
       });
     },
+
+    getData(name,key){
+        let id = ''
+        if(key){
+         id =  this.orgBranch.filter(val=>{return val.unionOrgName == name})[0].unionCorpid
+        }else{
+            id = name
+        }
+        this.$store.commit("setId1", id)
+        this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
+          this.allData = res.data.data
+          let p={},d={},x={},m={},q={},hy={},online={},mall={}
+          console.log("特殊人群管理", res.data.data)
+          let data =  res.data.data?.template
+          data.forEach(val=>{
+            if(val.name == '特殊人群管理'){
+                d.xData = [];
+                d.xDataAll =[];
+                d.oData =[]
+                if(val.list.length > 0){
+                 val.list.forEach(val => {
+                d.xData.push(val.orgName)
+                d.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    d.oData.push(o)
+                });   
+                }else{
+                d.xData = [];
+                d.xDataAll =[];
+                d.oData =[]
+                }
+               
+           }else if(val.name == '党员137'){
+                m.xData = [];
+                m.xDataAll =[];
+                m.oData =[]
+                val.list.forEach(val => {
+                m.xData.push(val.orgName)
+                m.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    m.oData.push(o)
+                });   
+           }else if(val.name == '乡村调解反馈'){
+                online.xData = [];
+                online.xDataAll =[];
+                online.oData =[]
+                val.list.forEach(val => {
+                online.xData.push(val.orgName)
+                online.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    online.oData.push(o)
+                });   
+             }else if(val.name == '你钉我办'){
+                 p.xData = [];
+                p.xDataAll =[];
+                p.oData =[]
+                val.list.forEach(val => {
+                p.xData.push(val.orgName)
+                p.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    p.oData.push(o)
+                });   
+             }
+             else if(val.name == '群防群治'){
+                 q.xData = [];
+                q.xDataAll =[];
+                q.oData =[]
+                val.list.forEach(val => {
+                q.xData.push(val.orgName)
+                q.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    q.oData.push(o)
+                });   
+             }
+
+             else if(val.name == '乡风文明'){
+                 x.xData = [];
+                x.xDataAll =[];
+                x.oData =[]
+                val.list.forEach(val => {
+                x.xData.push(val.orgName)
+                x.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    x.oData.push(o)
+                });   
+             }
+              else if(val.name == '惠农电商'){
+                 mall.xData = [];
+                mall.xDataAll =[];
+                mall.oData =[]
+                val.list.forEach(val => {
+                mall.xData.push(val.orgName)
+                mall.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    mall.oData.push(o)
+                });   
+             }
+             else if(val.name == '党务村务民主协商监督月例会'){
+                 hy.xData = [];
+                hy.xDataAll =[];
+                hy.oData =[]
+                val.list.forEach(val => {
+                hy.xData.push(val.orgName)
+                hy.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    hy.oData.push(o)
+                });   
+             }
+          })
+            let dataA ={
+                d:d,
+                p:p,
+                q:q,
+                online:online,
+                mall:mall,
+                x:x,
+                m:m,
+                hy:hy
+            }
+          this.$store.commit("setData", dataA)  
+        })
+    }
   },
 };
 </script>

@@ -1,3 +1,11 @@
+<!--
+ * @Author       : meiling.Wu
+ * @Date         : 2021-10-19 14:38:50
+ * @LastEditors  : meiling.Wu
+ * @LastEditTime : 2021-11-13 18:27:05
+ * @Description  : 
+ * @FilePath     : \big-screen-vue-datav-master\src\views\centerRight1.vue
+-->
 <template>
   <div id="centerRight1" style="overflow: hidden">
     <div class="bg-color-black">
@@ -6,7 +14,7 @@
           <icon name="chart-line" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">惠农电商销售排行榜</span>
+          <span class="fs-xxxl text mx-2">惠农电商销售排行榜</span>
         </div>
       </div>
       <div class="d-flex jc-center body-box">
@@ -21,19 +29,8 @@ export default {
   data() {
     return {
       config: {
-        header: ['商品', '地区', '占比'],
-        data: [
-          ['青菜', 'dev-1', "<span  class='colorGrass'>↑75%</span>"],
-          ['豆制品', 'dev-2', "<span  class='colorRed'>↓33%</span>"],
-          ['米酒', 'dev-3', "<span  class='colorGrass'>↑100%</span>"],
-          ['血鸭', 'rea-1', "<span  class='colorGrass'>↑94%</span>"],
-          ['鸡', 'rea-2', "<span  class='colorGrass'>↑95%</span>"],
-          ['大米', 'fix-2', "<span  class='colorGrass'>↑63%</span>"],
-          ['鱼', 'fix-4', "<span  class='colorGrass'>↑84%</span>"],
-          ['蛋', 'fix-7', "<span  class='colorRed'>↓46%</span>"],
-          ['菌类', 'dev-2', "<span  class='colorRed'>↓13%</span>"],
-          ['干货', 'dev-9', "<span  class='colorGrass'>↑76%</span>"]
-        ],
+        header: [ '地区', '数量',''],
+        data:[],
         rowNum: 7, //表格行数
         headerHeight: 35,
         headerBGC: '#0f1325', //表头
@@ -45,6 +42,20 @@ export default {
       }
     }
   },
+  watch: {
+    cdata: {
+      handler (val) {
+        this.config.data = val.mall?.oData
+      },
+      immediate: true,
+      deep: true
+    },
+  },
+   computed:{
+    cdata(){
+        return this.$store.state.allData
+    }
+  },
   components: {},
   mounted() {},
   methods: {}
@@ -52,8 +63,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$box-height: 370px;
-$box-width: 600px;
+$box-height: 100%;
+$box-width: 100%;
 #centerRight1 {
   padding: 16px;
   padding-top: 20px;
@@ -61,7 +72,7 @@ $box-width: 600px;
   width: $box-width;
   border-radius: 5px;
   .bg-color-black {
-    height: $box-height - 30px;
+    height:100%;
     border-radius: 10px;
   }
   .text {
@@ -75,5 +86,8 @@ $box-width: 600px;
       height: 340px;
     }
   }
+}
+.dv-scroll-board .header .header-item{
+ width: 50%!important;
 }
 </style>

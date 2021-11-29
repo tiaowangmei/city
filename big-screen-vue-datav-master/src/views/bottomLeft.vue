@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-10 23:03:23
+ * @LastEditTime : 2021-11-12 22:27:14
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\views\bottomLeft.vue
 -->
@@ -14,7 +14,7 @@
           <icon name="chart-bar" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">矛盾纠纷解决统计图</span>
+          <span class="fs-xxxl text mx-2">矛盾纠纷解决统计图</span>
         </div>
       </div>
       <div>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$box-height: 300px;
+$box-height: 100%;
 $box-width: 100%;
 #bottomLeft {
   padding: 20px 16px;
@@ -42,7 +42,7 @@ $box-width: 100%;
   width: $box-width;
   border-radius: 5px;
   .bg-color-black {
-    height: $box-height - 35px;
+    height: 100%;
     border-radius: 10px;
   }
   .text {

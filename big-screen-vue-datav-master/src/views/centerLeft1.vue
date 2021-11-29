@@ -6,15 +6,15 @@
           <icon name="chart-bar" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">特殊人员占比</span>
+          <span class="fs-xxxl text mx-2">特殊人员占比</span>
           <dv-decoration-3 class="dv-dec-3" />
         </div>
       </div>
-      <div class="d-flex jc-center">
+      <div class="d-flex jc-center" style="width:100%;height:calc(100% - 50px)">
         <CenterLeft1Chart />
       </div>
       <!-- 4个主要的数据 -->
-      <div class="bottom-data">
+      <div class="bottom-data" v-if="false">
         <div
           class="item-box mt-2"
           v-for="(item, index) in numberData"
@@ -47,7 +47,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 24
+              fontSize: 34
             }
           },
           text: '特殊人员'
@@ -59,7 +59,7 @@ export default {
             textAlign: 'left',
             content: '{nt}',
             style: {
-              fontSize: 24
+              fontSize: 34
             }
           },
           text: '总人数'
@@ -90,8 +90,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$box-width: 600px;
-$box-height: 300px;
+$box-width: 100%;
+$box-height: 100%;
 
 #centerLeft1 {
   padding: 16px;
@@ -99,7 +99,7 @@ $box-height: 300px;
   width: $box-width;
   border-radius: 10px;
   .bg-color-black {
-    height: $box-height - 30px;
+    height:100%;
     border-radius: 10px;
   }
   .text {
