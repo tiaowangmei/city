@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-14 21:15:11
+ * @LastEditTime : 2021-12-06 10:10:40
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\components\echart\middle\mLeftChart\chart.vue
 -->
@@ -148,22 +148,6 @@ export default {
     }
   ]
 };
-           
-          //  this.xAxis = ["零陵区", "七里店街道", "菱角塘镇", "珠山镇", "南津渡街道", "石山脚街道"]
-        // this.axios.post('/ding/approveDetail/getInfo?corpId=ding0b3219e0d629f0acf5bf40eda33b7ba0', {corpId: 'ding0b3219e0d629f0acf5bf40eda33b7ba0'}).then(res =>{
-        //  this.xAxis = []
-        //   this.yAxis = []
-         
-        //  this.OrgStats = res.data.data.OrgStats.map(val=>{
-        //       let da={}
-        //       da.name = val.name;
-        //       da.value = val.stats
-        //       this.xAxis.push(val.name)
-               
-        //        this.yAxis.push(+val.stats)
-        //       return da
-        //   })
-        //    console.log("newData.this.OrgStats",this.xAxis,this.yAxis)
         this.options1 ={
             series: [
           {

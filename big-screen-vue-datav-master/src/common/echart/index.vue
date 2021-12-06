@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-12-06 09:45:52
+ * @LastEditTime : 2021-12-06 10:10:22
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\common\echart\index.vue
 -->
@@ -80,7 +80,6 @@ export default {
       let $this =this
       let  res = this.dataReturn()
       this.chart.on('click', function (params) {
-          console.log("oooo",params)
           let corpId = params.data.id
           if(corpId){
                 $this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{

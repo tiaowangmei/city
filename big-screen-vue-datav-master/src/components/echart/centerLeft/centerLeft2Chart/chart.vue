@@ -263,7 +263,7 @@ export default {
               _self.options.series[0].layoutCenter = ['50%', '50%'];
              _self.options.visualMap.type = 'piecewise'
              this.isPic = params.name
-              _self.getData(params.name,1)
+            _self.getData(params.name,1)
               _self.getB()
         } catch (error) {
           console.log(error)
@@ -282,7 +282,147 @@ export default {
         this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
           this.allData = res.data.data
           let p={},d={},x={},m={},q={},hy={},online={},mall={}
-          let data =  res.data.data?.template
+          if(res.data.data.orgBranch.length == 1){
+              console.log("pppp6666", res.data.data.villageData)
+              let data = res.data.data.villageData
+              let person = data.filter(val=>{return val.templateName == '特殊人群管理'})
+              let dangy  = data.filter(val=>{return val.templateName == '党员137'})
+              let tangj  = data.filter(val=>{return val.templateName == '乡村调解反馈'})
+             let xfwm  = data.filter(val=>{return val.templateName == '乡风文明'})
+              let qfqz  = data.filter(val=>{return val.templateName == '群防群治'})
+              let ndwb  = data.filter(val=>{return val.templateName == '你钉我办'})
+               let hnds  = data.filter(val=>{return val.templateName == '惠农电商'})
+              let ylh  = data.filter(val=>{return val.templateName == '党务村务民主协商监督月例会'})
+               d.xData = [];
+                d.xDataAll =[];
+                d.oData =[]
+                d.xData = person.map(val=>{
+                    return val.name
+                })
+                 d.xDataAll =person.map(val=>{
+                    return val.number
+                })
+                d.oData = person.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                
+                m.xData = [];
+                m.xDataAll =[];
+                m.oData =[]
+                m.xData = dangy.map(val=>{
+                    return val.name
+                })
+                 m.xDataAll =dangy.map(val=>{
+                    return val.number
+                })
+                m.oData = dangy.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+               online.xData = [];
+               online.xDataAll =[];
+                online.oData =[]
+                online.xData = tangj.map(val=>{
+                    return val.name
+                })
+                 online.xDataAll =tangj.map(val=>{
+                    return val.number
+                })
+                online.oData = tangj.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+                 x.xData = [];
+               x.xDataAll =[];
+                x.oData =[]
+                x.xData = xfwm.map(val=>{
+                    return val.name
+                })
+                 x.xDataAll =xfwm.map(val=>{
+                    return val.number
+                })
+                x.oData = xfwm.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+
+               q.xData = [];
+               q.xDataAll =[];
+                q.oData =[]
+                q.xData = qfqz.map(val=>{
+                    return val.name
+                })
+                q.xDataAll =qfqz.map(val=>{
+                    return val.number
+                })
+                q.oData = qfqz.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+                p.xData = [];
+               p.xDataAll =[];
+                p.oData =[]
+                p.xData = ndwb.map(val=>{
+                    return val.name
+                })
+                p.xDataAll =ndwb.map(val=>{
+                    return val.number
+                })
+                p.oData = ndwb.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+                mall.xData = [];
+              mall.xDataAll =[];
+               mall.oData =[]
+               mall.xData = hnds.map(val=>{
+                    return val.name
+                })
+               mall.xDataAll =hnds.map(val=>{
+                    return val.number
+                })
+                mall.oData = hnds.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+                 hy.xData = [];
+              hy.xDataAll =[];
+               hy.oData =[]
+               hy.xData = ylh.map(val=>{
+                    return val.name
+                })
+               hy.xDataAll =ylh.map(val=>{
+                    return val.number
+                })
+                hy.oData = ylh.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+          }else{
+               let data =  res.data.data?.template
           data.forEach(val=>{
             if(val.name == '特殊人群管理'){
                 d.xData = [];
@@ -402,6 +542,7 @@ export default {
                 });   
              }
           })
+          }
             let dataA ={
                 d:d,
                 p:p,
@@ -412,6 +553,7 @@ export default {
                 m:m,
                 hy:hy
             }
+            console.log("fff",dataA)
           this.$store.commit("setData", dataA)  
         })
     }
