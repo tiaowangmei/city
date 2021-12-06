@@ -294,7 +294,7 @@ export default {
    },
   methods: {
        colorConfirm(e){
-        return this.colors[e-1]
+        return this.colors[e]
     },
       resize() {
 	// 记录开发时候的尺寸

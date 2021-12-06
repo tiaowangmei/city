@@ -403,7 +403,8 @@ export default {
                 })
           }else{
                let data =  res.data.data?.template
-
+                mall.type = undefined
+                online.type = undefined
           data.forEach(val=>{
             if(val.name == '特殊人群管理'){
                 d.xData = [];
