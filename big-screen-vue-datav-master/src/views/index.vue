@@ -78,12 +78,12 @@
                    <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:80%;height:100%;float:left" >
+                 <div style="width:75%;height:100%;float:left" >
                     <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
                 </div>
-               <div style="width:20%;height:100%;float:left;margin-top:4%">
+               <div style="width:25%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.x.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm1(index)}"></span>
                        <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
                    </p>
                </div>
@@ -125,10 +125,10 @@
                     <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:80%;height:100%;float:left" >
+                 <div style="width:75%;height:100%;float:left" >
                     <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
                 </div>
-               <div style="width:20%;height:100%;float:left;margin-top:4%">
+               <div style="width:25%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.m.oData" :key="index" style="clear:both">
                        <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
                        <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
@@ -185,7 +185,22 @@
                 <img src="img/title_5.png" alt="">
                 群防群治
             </div>
-            <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
+             <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
+                     <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
+              </div>
+                <div  style="width:100%;height:calc(100% - 35px);"  v-else>
+                 <div style="width:75%;height:100%;float:left" >
+                    <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
+                </div>
+               <div style="width:25%;height:100%;float:left;margin-top:4%">
+                   <p v-for="(n,index) in cdata.q.oData" :key="index" style="clear:both">
+                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm1(index)}"></span>
+                       <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
+                   </p>
+               </div>
+              </div>
+
+           
         </div>
     </div>
 </div>
@@ -240,6 +255,16 @@ export default {
             "#ffdb5c",
             "#ff9f7f",
             "#8378ea"
+          ],
+           colors1:[
+             "#8378ea",
+            "#fb7293",
+            "#37a2da",
+            "#e7bcf3",
+            "#32c5e9",
+            "#9fe6b8",
+            "#ffdb5c",
+            "#ff9f7f",
           ]
     }
   },
@@ -295,6 +320,9 @@ export default {
   methods: {
        colorConfirm(e){
         return this.colors[e]
+    },
+       colorConfirm1(e){
+        return this.colors1[e]
     },
       resize() {
 	// 记录开发时候的尺寸
@@ -525,30 +553,6 @@ export default {
                     }
                 },
                 data: val.online.oData
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
-                    }
-                },
-                data:val.online.oData
             }]
         }
         }
@@ -617,30 +621,6 @@ export default {
                         }
                     },
                     data: val.hy.yueYlh,
-                }, {
-                    name: '',
-                    type: 'pie',
-                    clockwise: false,
-                    silent: true,
-                    minAngle: 20, //最小的扇区角度（0 ~ 360）
-                    center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                    radius: [0, 45], //饼图的半径
-                    itemStyle: { //图形样式
-                        normal: {
-                            borderColor: '#1e2239',
-                            borderWidth: 1.5,
-                            opacity: 0.21,
-                            color:function(e){
-                                return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                            }
-                        }
-                    },
-                    label: { //标签的位置
-                        normal: {
-                            show: false,
-                        }
-                    },
-                    data:  val.hy.yueYlh,
                 }]
             }
 
@@ -700,30 +680,6 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
-                    }
-                },
-                data: val.hy.nianYlh
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['30%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
                     }
                 },
                 data: val.hy.nianYlh
@@ -932,30 +888,6 @@ export default {
                     }
                 },
                 data: val.d.zPerson
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
-                    }
-                },
-                data: val.d.zPerson
             }]
         }
 
@@ -1015,30 +947,6 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
-                    }
-                },
-                data: val.d.rPerson
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
                     }
                 },
                 data: val.d.rPerson
@@ -1266,6 +1174,16 @@ export default {
             }
          }
 
+      var c =[
+             "#8378ea",
+            "#fb7293",
+            "#37a2da",
+            "#e7bcf3",
+            "#32c5e9",
+            "#9fe6b8",
+            "#ffdb5c",
+            "#ff9f7f",
+          ]
             var legendDataq= val.q.xData
             var serieDataq = [];
             var metaDateq = val.q.type == 'pie'?val.q.oData:val.q.xDataAll
@@ -1281,7 +1199,7 @@ export default {
                         borderColor: '#1e2239',
                         borderWidth: 1.5,
                         color: function(e){
-                            return colors[e.dataIndex]
+                            return c[e.dataIndex]
                             }
                     },
                 },
@@ -1367,10 +1285,6 @@ export default {
                             return d[e.dataIndex]+"-"+e.data
                         }
                     },
-                    // legend: { //图例组件，颜色和名字
-                    //     show:true,
-                    //     orient: 'vertical',
-                    // },
                     xAxis: [
                         {
                             type: 'category',

@@ -85,7 +85,7 @@ export default {
                 $this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
                     $this.$store.commit("setorgBranch",re.data.data.orgBranch)
                 if($this.options.series.length == 2 || params.dimensionNames[0]=="lng"){
-                    $this.$emit('handleMapRandomSelect',params)
+                  if(params.dimensionNames[0]=="lng")  $this.$emit('handleMapRandomSelect',params)
                     }else{
                     let all = {}
                     let allCity = res.features.filter(val=>{
@@ -118,7 +118,7 @@ export default {
        let res = this.dataReturn()
        let corpId =this.ids
            this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
-                let  name =  re.data.data.orgBranch.filter(val=>{return val.unionCorpid == corpId})[0].unionOrgName
+                let  name =  re.data.data.orgBranch.filter(val=>{return val.unionCorpid == corpId})[0]?.unionOrgName
                   let allData = {}
                   if(name =='零陵区' ){
                    allData = res
