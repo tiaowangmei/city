@@ -26,7 +26,7 @@ export default {
       orgBranch:[],
       city:{},
       isPic:'',
-      dataList:[]
+      dataList:[],
     };
   },
   components: {
@@ -73,13 +73,10 @@ export default {
                 let query=this.$route.query;
                  let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
                  this.getData(corpId)
-                //  this.getB()
-                //  this.getOption()
   },
   methods: {
      getOption(){
          this.orgBranch = this.dCity
-         console.log("9999",this.dCity)
          this.isPic=  this.dCity.filter(val=>{return val.unionCorpid == this.id})[0].unionOrgName
            this.city =  this.dCity.map(val=>{
            let normal ={}
@@ -283,23 +280,25 @@ export default {
           this.allData = res.data.data
           let p={},d={},x={},m={},q={},hy={},online={},mall={}
           if(res.data.data.orgBranch.length == 1){
-              console.log("pppp6666", res.data.data.villageData)
               let data = res.data.data.villageData
               let person = data.filter(val=>{return val.templateName == '特殊人群管理'})
+              let zPerson = person.filter(val=>{return val.type == '重点人群'})
+              let rPerson = person.filter(val=>{return val.type == '弱势群体'})
               let dangy  = data.filter(val=>{return val.templateName == '党员137'})
-              let tangj  = data.filter(val=>{return val.templateName == '乡村调解反馈'})
-             let xfwm  = data.filter(val=>{return val.templateName == '乡风文明'})
+              let xfwm  = data.filter(val=>{return val.templateName == '乡风文明'})
               let qfqz  = data.filter(val=>{return val.templateName == '群防群治'})
-              let ndwb  = data.filter(val=>{return val.templateName == '你钉我办'})
-               let hnds  = data.filter(val=>{return val.templateName == '惠农电商'})
               let ylh  = data.filter(val=>{return val.templateName == '党务村务民主协商监督月例会'})
-               d.xData = [];
+              let yueYlh = ylh.filter(val=>{return val.type == '当月'})
+               let nianYlh = ylh.filter(val=>{return val.type == '当年'})
+                mall.type = 'pie'
+                online.type = 'pie'
+                d.xData = [];
                 d.xDataAll =[];
                 d.oData =[]
                 d.xData = person.map(val=>{
                     return val.name
                 })
-                 d.xDataAll =person.map(val=>{
+                d.xDataAll =person.map(val=>{
                     return val.number
                 })
                 d.oData = person.map(val=>{
@@ -308,10 +307,22 @@ export default {
                          value:val.number
                     }
                 })
-                
+                d.rPerson = rPerson.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                 d.zPerson = zPerson.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
                 m.xData = [];
                 m.xDataAll =[];
                 m.oData =[]
+                m.type = 'bar'
                 m.xData = dangy.map(val=>{
                     return val.name
                 })
@@ -325,24 +336,8 @@ export default {
                     }
                 })
 
-               online.xData = [];
-               online.xDataAll =[];
-                online.oData =[]
-                online.xData = tangj.map(val=>{
-                    return val.name
-                })
-                 online.xDataAll =tangj.map(val=>{
-                    return val.number
-                })
-                online.oData = tangj.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-
-                 x.xData = [];
-               x.xDataAll =[];
+                x.xData = [];
+                x.xDataAll =[];
                 x.oData =[]
                 x.xData = xfwm.map(val=>{
                     return val.name
@@ -374,42 +369,13 @@ export default {
                     }
                 })
 
-                p.xData = [];
-               p.xDataAll =[];
-                p.oData =[]
-                p.xData = ndwb.map(val=>{
-                    return val.name
-                })
-                p.xDataAll =ndwb.map(val=>{
-                    return val.number
-                })
-                p.oData = ndwb.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
+           
 
-                mall.xData = [];
-              mall.xDataAll =[];
-               mall.oData =[]
-               mall.xData = hnds.map(val=>{
-                    return val.name
-                })
-               mall.xDataAll =hnds.map(val=>{
-                    return val.number
-                })
-                mall.oData = hnds.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-
-                 hy.xData = [];
-              hy.xDataAll =[];
-               hy.oData =[]
-               hy.xData = ylh.map(val=>{
+                hy.xData = [];
+                hy.xDataAll =[];
+                hy.oData =[]
+                hy.type = 'line'
+                hy.xData = ylh.map(val=>{
                     return val.name
                 })
                hy.xDataAll =ylh.map(val=>{
@@ -421,8 +387,23 @@ export default {
                          value:val.number
                     }
                 })
+                
+                hy.type = 'pie'
+                hy.yueYlh = yueYlh.map(val=>{
+                    return  {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                hy.nianYlh = nianYlh.map(val=>{
+                    return  {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
           }else{
                let data =  res.data.data?.template
+
           data.forEach(val=>{
             if(val.name == '特殊人群管理'){
                 d.xData = [];
@@ -457,33 +438,7 @@ export default {
                 }
                     m.oData.push(o)
                 });   
-           }else if(val.name == '乡村调解反馈'){
-                online.xData = [];
-                online.xDataAll =[];
-                online.oData =[]
-                val.list.forEach(val => {
-                online.xData.push(val.orgName)
-                online.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    online.oData.push(o)
-                });   
-             }else if(val.name == '你钉我办'){
-                 p.xData = [];
-                p.xDataAll =[];
-                p.oData =[]
-                val.list.forEach(val => {
-                p.xData.push(val.orgName)
-                p.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    p.oData.push(o)
-                });   
-             }
+           }
              else if(val.name == '群防群治'){
                  q.xData = [];
                 q.xDataAll =[];
@@ -513,20 +468,6 @@ export default {
                     x.oData.push(o)
                 });   
              }
-              else if(val.name == '惠农电商'){
-                 mall.xData = [];
-                mall.xDataAll =[];
-                mall.oData =[]
-                val.list.forEach(val => {
-                mall.xData.push(val.orgName)
-                mall.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    mall.oData.push(o)
-                });   
-             }
              else if(val.name == '党务村务民主协商监督月例会'){
                  hy.xData = [];
                 hy.xDataAll =[];
@@ -543,6 +484,49 @@ export default {
              }
           })
           }
+           let datathree =  res.data.data?.template
+              let ndwb  = datathree.filter(val=>{return val.name == '你钉我办'})[0]
+              let hnds  = datathree.filter(val=>{return val.name == '惠农电商'})[0]
+              let tangj  = datathree.filter(val=>{return val.name == '乡村调解反馈'})[0]
+                 mall.xData = [];
+                mall.xDataAll =[];
+                mall.oData =[]
+                hnds.list.forEach(val => {
+                mall.xData.push(val.orgName)
+                mall.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    mall.oData.push(o)
+                });
+
+                 p.xData = [];
+                p.xDataAll =[];
+                p.oData =[]
+                ndwb.list.forEach(val => {
+                p.xData.push(val.orgName)
+                p.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    p.oData.push(o)
+                });   
+             
+                online.xData = [];
+                online.xDataAll =[];
+                online.oData =[]
+                tangj.list.forEach(val => {
+                online.xData.push(val.orgName)
+                online.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    online.oData.push(o)
+                });   
+
             let dataA ={
                 d:d,
                 p:p,
