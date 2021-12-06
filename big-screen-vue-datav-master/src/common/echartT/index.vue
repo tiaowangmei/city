@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-29 19:13:15
+ * @LastEditTime : 2021-11-29 19:50:03
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\common\echartT\index.vue
 -->
@@ -53,7 +53,6 @@ export default {
   watch: {
     options: {
       handler (options) {
-          console.log("pppoooo",options)
            this.chart?.setOption(options, true)
       },
       deep: true

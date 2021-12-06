@@ -73,7 +73,7 @@
                     <div>{{name}}</div>
                       {{remark}}
                  </div>
-                 <div style="width:70%;height:100%">
+                 <div style="width:70%;height:100%" v-if="subId">
                       <centerLeft2/>
                  </div>
                
@@ -177,6 +177,7 @@ export default {
     watch: {
         cdata(val) {
             this.getAllPic(val)
+            this.getData(this.$store.state.id1)
         }
    
    },
@@ -200,13 +201,17 @@ export default {
                  let d = re.data.data.orgBranch
                  if(d.length == 1){
                       this.$store.commit("setInitId", d[0].parentId)
+                      this.axios.post('/ding//approveDetail/getInfo?corpId='+d[0].parentId, {}).then(r=>{
+                       this.$store.commit("setorgBranch",r.data.data.orgBranch)
+                      })
                  }else{
                       this.$store.commit("setInitId",corpId)
+                      this.$store.commit("setorgBranch",d)
                  }
                   this.$store.commit("setSubId",corpId)
-                 this.getData(corpId)
                  this.subId = corpId
              })
+
           this.axios.get('/ding/approveDetail/getBackImg?corpId='+corpId, {}).then(res =>{
           this.srcImgUrl = res.data.data.img.file
           this.title = res.data.data.title
@@ -242,14 +247,9 @@ export default {
             detail.push(val)
           }
       });
-      
-          
      this.getUserDataInfo.push(first)
      this.getUserDataInfo.push(second)
      this.getUserDataInfo.push(three)
-     console.log("this.getUserDataInfo",this.getUserDataInfo)
-   
-    
    })
      
    },
@@ -734,7 +734,6 @@ export default {
         };
     },
     getAllPic(val){
-        console.log("oooo",val)
      this.getPersonyoume(val)
      this.getPerson(val)
      this.getMall(val)

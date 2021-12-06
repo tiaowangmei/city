@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-23 21:22:18
+ * @LastEditTime : 2021-11-30 00:25:52
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\store\index.js
  */
@@ -18,7 +18,8 @@ export default new Vuex.Store({
       id1:'',
       initId:'',
       subId:'',
-      orgBranch:{}
+      orgBranch:[],
+      dataId:''
   },
   mutations: {
     setData(state,allData){
@@ -36,9 +37,12 @@ export default new Vuex.Store({
     setSubId(state,id){
         state.subId= id
     },
-    seetorgBranch(state,orgBranch){
+    setorgBranch(state,orgBranch){
         state.orgBranch= orgBranch
-    }
+    },
+    setDataId(state,id){
+        state.dataId= id
+    },
   },
   actions: {
   },

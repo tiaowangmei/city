@@ -38,42 +38,56 @@ export default {
       default: () => [],
     },
   },
+  computed:{
+     id(){
+         return this.$store.state.initId
+     },
+     dCity(){
+         return this.$store.state.orgBranch
+     },
+  },
   watch: {
     cdata: {
-      handler() {
-         
+      handler() { },
+      immediate: true,
+      deep: true,
+    },
+    id :{
+      handler(val) {
+          return val
+        },
+      immediate: true,
+      deep: true,
+    },
+     dCity :{
+      handler(val) {
+           this.getOption()
+          this.getB()
+          return val
         },
       immediate: true,
       deep: true,
     },
   },
   mounted(){
-        let query=this.$route.query;
-            let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
-             this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
-                 let d = re.data.data.orgBranch
-                 if(d.length == 1){
-                      this.$store.commit("setInitId", d[0].parentId)
-                 }else{
-                      this.$store.commit("setInitId",corpId)
-                 }
-                 this.$store.commit("setSubId",corpId)
+                let query=this.$route.query;
+                 let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
                  this.getData(corpId)
-                 this.getB(corpId)
-                this. getOption(this.$store.state.initId)
-             })
+                //  this.getB()
+                //  this.getOption()
   },
   methods: {
-     getOption(corpId){
-         this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(res=>{
-           this.orgBranch = res.data.data.orgBranch 
-         this.isPic=  res.data.data.orgBranch.filter(val=>{return val.unionCorpid == corpId})[0].unionOrgName
-           this.city =  this.orgBranch.map(val=>{
+     getOption(){
+         this.orgBranch = this.dCity
+         console.log("9999",this.dCity)
+         this.isPic=  this.dCity.filter(val=>{return val.unionCorpid == this.id})[0].unionOrgName
+           this.city =  this.dCity.map(val=>{
            let normal ={}
            normal.areaColor = val.id<5?'#00DB00':val.id<20?'#00E3E3':val.id<30?'#FF2D2D':'#FFD306'
               return {
                   name:val.unionOrgName,
                   value:val.id,
+                  id:val.unionCorpid,
                   flag:val.orgName|| '',
                   itemStyle:{
                        normal:normal
@@ -95,9 +109,8 @@ export default {
               lineHeight: 22,
             },
             "formatter": (p)=>{
-                console.log("0",p)
-                 let dataCon = p.data,
-                  txtCon = `${dataCon.name}`
+               //  let dataCon = p.data,
+                let  txtCon = `${p.data?.name}`
                   return txtCon
             }
           },
@@ -178,15 +191,11 @@ export default {
           ],
           
         };
-           })
     
      },
-
-      getB(id){
-       this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
-            this.orgBranch = res.data.data.orgBranch
+     getB(){
             let data = []
-            this.orgBranch.forEach(val=>{
+             this.dCity.forEach(val=>{
                 let d = {
                     name:val.unionOrgName,
                     value:[val.lng,val.lat]
@@ -195,7 +204,6 @@ export default {
                     data.push(d)
                 }
             })
-            // if(data.length > 0 &&  this.orgBranch[0].unionOrgName == "七里店街道"){
             let src =  {
                         name:'',
                         type: 'effectScatter',
@@ -233,9 +241,13 @@ export default {
                             zlevel: 6,
                             zoom :7
                         }
-                this.options.series.push(src)
-            // }
-        })
+                        if(data.length > 0){
+                            if(this.options.series.length > 1){
+                                 this.options.series.splice(1,1,src)
+                            }else{
+                                this.options.series.push(src)
+                            }
+                        }
       },
 
     handleMapRandomSelect(params) {
@@ -252,7 +264,7 @@ export default {
              _self.options.visualMap.type = 'piecewise'
              this.isPic = params.name
               _self.getData(params.name,1)
-              _self.getB(this.$store.state.id)
+              _self.getB()
         } catch (error) {
           console.log(error)
         }
@@ -262,7 +274,7 @@ export default {
     getData(name,key){
         let id = ''
         if(key){
-         id =  this.orgBranch.filter(val=>{return val.unionOrgName == name})[0].unionCorpid
+         id =  this.dCity.filter(val=>{return val.unionOrgName == name})[0].unionCorpid
         }else{
             id = name
         }
@@ -270,7 +282,6 @@ export default {
         this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
           this.allData = res.data.data
           let p={},d={},x={},m={},q={},hy={},online={},mall={}
-          console.log("特殊人群管理", res.data.data)
           let data =  res.data.data?.template
           data.forEach(val=>{
             if(val.name == '特殊人群管理'){
