@@ -96,12 +96,23 @@
                     <img src="img/title_3.png" alt="">
                     区域地图
                 </div>
-                <div class="describ"  style="width:30%;height:90%">
+                <div class="describ"  style="width:27%;height:90%">
                     <div>{{name}}</div>
                       {{remark}}
                  </div>
-                 <div style="width:70%;height:100%" v-if="subId">
-                      <centerLeft2/>
+                 <div style="width:73%;height:90%"  v-if="subId">
+                     <div style="height:100% ;float:left" :style="{width:orgBranch.length>1 && orgBranch[0].parentId!=0?'calc(100% - 120px)':'100%'}">
+                         <centerLeft2 ref="t"/>
+                     </div>
+                     
+                 <div style="max-width:200px;float:left;height:100%;position: absolute;right: 27%;top:10px;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
+                     <div class="dddd" @click="toDetailInit(item)" style="display:inline-block; margin: 10px 10px 0;width:80px;height:20px" v-for="(item,index) in orgBranch" :key="index">
+                         <div v-if="index>0"><span style="width:10px;height:10px;background:#d00;display:inline-block;" :style="{background:colors2[index]}"></span> {{item.unionOrgName}}</div>
+                        
+                         </div>
+
+                 </div>
+
                  </div>
                
             </div>
@@ -265,7 +276,34 @@ export default {
             "#9fe6b8",
             "#ffdb5c",
             "#ff9f7f",
-          ]
+          ],
+          colors2:[
+             "#8378ea",
+            "#fb7293",
+            "#37a2da",
+             "#fb7293",
+            "#37a2da",
+            "#e7bcf3",
+            "#32c5e9",
+            "#9fe6b8",
+            "#ffdb5c",
+            "#ff9f7f",
+            "#8378ea",
+            "#e7bcf3",
+            "#32c5e9",
+            "#9fe6b8",
+            "#ffdb5c", 
+            "#fb7293",
+            "#37a2da",
+            "#e7bcf3",
+            "#32c5e9",
+            "#9fe6b8",
+            "#ffdb5c",
+            "#ff9f7f",
+            "#8378ea",
+            "#ff9f7f",
+          ],
+          orgBranch:[]
     }
   },
   computed:{
@@ -276,6 +314,8 @@ export default {
   },
     watch: {
         cdata(val) {
+            console.log("999",val)
+            this.orgBranch = val.allData
             this.getAllPic(val)
             this.getData(this.$store.state.id1)
         }
@@ -286,7 +326,6 @@ export default {
     this.timeFn()
     this.cancelLoading()
     window.addEventListener('resize', () => {
-    console.log('resize')
     this.resize()
 })
 
@@ -299,6 +338,8 @@ export default {
             let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
              this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
                  let d = re.data.data.orgBranch
+                   
+                // this.orgBranch = d
                  if(d.length == 1){
                       this.$store.commit("setInitId", d[0].parentId)
                       this.axios.post('/ding//approveDetail/getInfo?corpId='+d[0].parentId, {}).then(r=>{
@@ -318,6 +359,280 @@ export default {
         })
    },
   methods: {
+      toDetailInit(init){
+         console.log("tt",this.$refs.t,init)
+        // this.$refs.t.$children[0].$children[0].handleMapRandomSelect()
+        this.getDataInit(init.unionCorpid)
+      },
+     getDataInit(id){
+        this.$store.commit("setId1", id)
+        this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
+          this.allData = res.data.data
+          let p={},d={},x={},m={},q={},hy={},online={},mall={}
+          if(res.data.data.orgBranch.length == 1){
+              let data = res.data.data.villageData
+              let person = data.filter(val=>{return val.templateName == '特殊人群管理'})
+              let zPerson = person.filter(val=>{return val.type == '重点人群'})
+              let rPerson = person.filter(val=>{return val.type == '弱势群体'})
+              let dangy  = data.filter(val=>{return val.templateName == '党员137'})
+              let xfwm  = data.filter(val=>{return val.templateName == '乡风文明'})
+              let qfqz  = data.filter(val=>{return val.templateName == '群防群治'})
+              let ylh  = data.filter(val=>{return val.templateName == '党务村务民主协商监督月例会'})
+              let yueYlh = ylh.filter(val=>{return val.type == '当月'})
+               let nianYlh = ylh.filter(val=>{return val.type == '当年'})
+                mall.type = 'pie'
+                online.type = 'pie'
+                d.xData = [];
+                d.xDataAll =[];
+                d.oData =[]
+                d.xData = person.map(val=>{
+                    return val.name
+                })
+                d.xDataAll =person.map(val=>{
+                    return val.number
+                })
+                d.oData = person.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                d.rPerson = rPerson.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                 d.zPerson = zPerson.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                m.xData = [];
+                m.xDataAll =[];
+                m.oData =[]
+                m.type = 'bar'
+                m.xData = dangy.map(val=>{
+                    return val.name
+                })
+                 m.xDataAll =dangy.map(val=>{
+                    return val.number
+                })
+                m.oData = dangy.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+                x.xData = [];
+                x.xDataAll =[];
+                x.oData =[]
+                x.xData = xfwm.map(val=>{
+                    return val.name
+                })
+                 x.xDataAll =xfwm.map(val=>{
+                    return val.number
+                })
+                x.oData = xfwm.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+
+               q.xData = [];
+               q.xDataAll =[];
+                q.oData =[]
+                q.xData = qfqz.map(val=>{
+                    return val.name
+                })
+                q.xDataAll =qfqz.map(val=>{
+                    return val.number
+                })
+                q.oData = qfqz.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+
+           
+
+                hy.xData = [];
+                hy.xDataAll =[];
+                hy.oData =[]
+                hy.type = 'line'
+                hy.xData = ylh.map(val=>{
+                    return val.name
+                })
+               hy.xDataAll =ylh.map(val=>{
+                    return val.number
+                })
+                hy.oData = ylh.map(val=>{
+                    return {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                
+                hy.type = 'pie'
+                hy.yueYlh = yueYlh.map(val=>{
+                    return  {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+                hy.nianYlh = nianYlh.map(val=>{
+                    return  {
+                         name: val.name,
+                         value:val.number
+                    }
+                })
+          }else{
+               let data =  res.data.data?.template
+                mall.type = undefined
+                online.type = undefined
+          data.forEach(val=>{
+            if(val.name == '特殊人群管理'){
+                d.xData = [];
+                d.xDataAll =[];
+                d.oData =[]
+                if(val.list.length > 0){
+                 val.list.forEach(val => {
+                d.xData.push(val.orgName)
+                d.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    d.oData.push(o)
+                });   
+                }else{
+                d.xData = [];
+                d.xDataAll =[];
+                d.oData =[]
+                }
+               
+           }else if(val.name == '党员137'){
+                m.xData = [];
+                m.xDataAll =[];
+                m.oData =[]
+                val.list.forEach(val => {
+                m.xData.push(val.orgName)
+                m.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    m.oData.push(o)
+                });   
+           }
+             else if(val.name == '群防群治'){
+                 q.xData = [];
+                q.xDataAll =[];
+                q.oData =[]
+                val.list.forEach(val => {
+                q.xData.push(val.orgName)
+                q.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    q.oData.push(o)
+                });   
+             }
+
+             else if(val.name == '乡风文明'){
+                 x.xData = [];
+                x.xDataAll =[];
+                x.oData =[]
+                val.list.forEach(val => {
+                x.xData.push(val.orgName)
+                x.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    x.oData.push(o)
+                });   
+             }
+             else if(val.name == '党务村务民主协商监督月例会'){
+                 hy.xData = [];
+                hy.xDataAll =[];
+                hy.oData =[]
+                val.list.forEach(val => {
+                hy.xData.push(val.orgName)
+                hy.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    hy.oData.push(o)
+                });   
+             }
+          })
+          }
+           let datathree =  res.data.data?.template
+              let ndwb  = datathree.filter(val=>{return val.name == '你钉我办'})[0]
+              let hnds  = datathree.filter(val=>{return val.name == '惠农电商'})[0]
+              let tangj  = datathree.filter(val=>{return val.name == '乡村调解反馈'})[0]
+                 mall.xData = [];
+                mall.xDataAll =[];
+                mall.oData =[]
+                hnds.list.forEach(val => {
+                mall.xData.push(val.orgName)
+                mall.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    mall.oData.push(o)
+                });
+
+                 p.xData = [];
+                p.xDataAll =[];
+                p.oData =[]
+                ndwb.list.forEach(val => {
+                p.xData.push(val.orgName)
+                p.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    p.oData.push(o)
+                });   
+             
+                online.xData = [];
+                online.xDataAll =[];
+                online.oData =[]
+                tangj.list.forEach(val => {
+                online.xData.push(val.orgName)
+                online.xDataAll.push(val.stats)
+                let o = {
+                    value:val.stats,
+                    name:val.orgName
+                }
+                    online.oData.push(o)
+                });   
+
+            let dataA ={
+                d:d,
+                p:p,
+                q:q,
+                online:online,
+                mall:mall,
+                x:x,
+                m:m,
+                hy:hy,
+                allData:this.allData.orgBranch
+            }
+            console.log("fff",this.allData.orgBranch )
+          this.$store.commit("setData", dataA)  
+        })
+    },
        colorConfirm(e){
         return this.colors[e]
     },
@@ -1382,5 +1697,12 @@ export default {
 }
 .lo-title1 div:nth-child(1){
     padding-left:10%;
+}
+.dddd{
+    cursor: pointer;
+
+}
+.dddd:hover{
+    color: #d00;
 }
 </style>

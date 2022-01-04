@@ -15,7 +15,7 @@ const proxyTable= {
     // 匹配所有以 /api 开头的url
     '/ding': {
         // 请求的目标主机
-        target: 'http://top.cloudwj.com/',
+        target: 'http://szdp.hnyfsk.com/',
         changeOrigin: true,
     },
     '/meiling_wu': {
@@ -33,7 +33,7 @@ module.exports = {
   devServer: {
     // vue项目启动时的ip地址和端口
     host: 'localhost',
-    port: 8000,
+    port: 8080,
     https: false,
     open:true,
     proxy: proxyTable

@@ -29,7 +29,7 @@ export default {
     },
     height: {
       type: String,
-      default: '2.5rem'
+      default: '100%'
     },
     options: {
       type: Object,
@@ -53,14 +53,28 @@ export default {
   watch: {
     options: {
       handler (options) {
+        console.log("5555",this.options)
            this.chart?.setOption(options, true)
       },
       deep: true
     },
   },
   mounted () {
+    let $this= this
            this.chart = this.$echarts.init(this.$el, 'tdTheme')
-           this.chart.setOption(this.options, true)
+           
+           this.chart.setOption(this.options, true)   
+this.chart.on('click', function (params) {
+   if(params.componentSubType == 'pie'){
+      $this.chart.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex
+    })  
+
+   }
+   
+});
   },
   methods: {
  

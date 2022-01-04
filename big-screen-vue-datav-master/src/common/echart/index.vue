@@ -30,7 +30,7 @@ export default {
     },
     height: {
       type: String,
-      default: '2.5rem'
+      default: '100%'
     },
     options: {
       type: Object,
@@ -81,11 +81,12 @@ export default {
       let  res = this.dataReturn()
       this.chart.on('click', function (params) {
           let corpId = params.data.id
+         
           if(corpId){
                 $this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
                     $this.$store.commit("setorgBranch",re.data.data.orgBranch)
                 if($this.options.series.length == 2 || params.dimensionNames[0]=="lng"){
-                  if(params.dimensionNames[0]=="lng")  $this.$emit('handleMapRandomSelect',params)
+                 // if(params.dimensionNames[0]=="lng")  $this.$emit('handleMapRandomSelect',params)
                     }else{
                     let all = {}
                     let allCity = res.features.filter(val=>{

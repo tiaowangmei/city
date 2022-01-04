@@ -4,7 +4,7 @@
       id="centreLeft2Chart"
       ref="centreLeft2ChartRef"
       :options="options"
-      height="400px"
+      height="100%"
       width="100%"
       @handleMapRandomSelect= 'handleMapRandomSelect'
       :isPic='isPic'
@@ -62,7 +62,7 @@ export default {
      dCity :{
       handler(val) {
            this.getOption()
-          this.getB()
+        //  this.getB()
           return val
         },
       immediate: true,
@@ -261,7 +261,7 @@ export default {
              _self.options.visualMap.type = 'piecewise'
              this.isPic = params.name
             _self.getData(params.name,1)
-              _self.getB()
+           //   _self.getB()
         } catch (error) {
           console.log(error)
         }
@@ -536,9 +536,10 @@ export default {
                 mall:mall,
                 x:x,
                 m:m,
-                hy:hy
+                hy:hy,
+                allData:this.allData.orgBranch
             }
-            console.log("fff",dataA)
+            console.log("fff",this.allData.orgBranch )
           this.$store.commit("setData", dataA)  
         })
     }
