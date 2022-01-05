@@ -18,23 +18,23 @@
 <!--content开始-->
 <div class="data_content" :style="{backgroundImage: 'url(' + srcImgUrl + ')', backgroundSize:'100% 100%', backgroundRepeat: 'no-repeat'}">
     <div class="data_time"  v-if="false">
-        <img src="img/data_time.png" alt="" class="fl">
+        <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/data_time.png" alt="" class="fl">
        {{ dateYear }} {{ dateWeek }} {{ dateDay }}
     </div>
     <div class="data_info">
         <div :class="index === 1?'info_1 fl':index===2?'info_2 fl':'info_3 fr'" v-for="(item,index) in getUserDataInfo" :key="index">
             <div class="" :class="index === 1?'text_1':index===2?'text_2':'text_3'"> 
                 <div class="fl" v-for="(t,ind) in item " :key="ind">
-                    <img v-if="ind==0 && index == 0" src="../assets/img/info_5.png" alt="" class="fl">
-                    <img v-if="ind==0 && index ==1" src="../assets/img/info_1.png" alt="" class="fl">
-                    <img v-if="ind==0 && index == 2" src="../assets/img/info_8.png" alt="" class="fl">
-                    <img v-if="ind==1&& index == 0" src="../assets/img/info_6.png" alt="" class="fl">
-                    <img v-if="ind==1&& index == 1" src="../assets/img/info_2.png" alt="" class="fl">
-                    <img v-if="ind==1&& index == 2" src="../assets/img/info_9.png" alt="" class="fl">
-                   <img v-if="ind==2&& index == 0" src="../assets/img/info_7.png" alt="" class="fl">
-                    <img v-if="ind==2&& index == 1" src="../assets/img/info_3.png" alt="" class="fl">
-                    <img v-if="ind==2&& index == 2" src="../assets/img/info_10.png" alt="" class="fl"> 
-                    <img v-if="ind==3" src="../assets/img/info_4.png" alt="" class="fl">
+                    <img v-if="ind==0 && index == 0" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_5.png" alt="" class="fl">
+                    <img v-if="ind==0 && index ==1" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_1.png" alt="" class="fl">
+                    <img v-if="ind==0 && index == 2" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_8.png" alt="" class="fl">
+                    <img v-if="ind==1&& index == 0" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_6.png" alt="" class="fl">
+                    <img v-if="ind==1&& index == 1" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_2.png" alt="" class="fl">
+                    <img v-if="ind==1&& index == 2" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_9.png" alt="" class="fl">
+                   <img v-if="ind==2&& index == 0" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_7.png" alt="" class="fl">
+                    <img v-if="ind==2&& index == 1" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_3.png" alt="" class="fl">
+                    <img v-if="ind==2&& index == 2" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_10.png" alt="" class="fl"> 
+                    <img v-if="ind==3" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_4.png" alt="" class="fl">
                     <div class="fl">
                         <p>{{t.kpiName}}</p>
                         <p>{{t.stats}}</p>
@@ -49,7 +49,7 @@
         <div class="main_left fl">
             <div class="left_1">
                 <div class="main_title">
-                    <img src="img/title_1.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_1.png" alt="">
                     特殊人群管理
                 </div>
                 <div style="width:100%;height:100%" v-if="isPerson">
@@ -70,7 +70,7 @@
             </div>
             <div class="left_2">
                 <div class="main_title">
-                    <img src="img/title_2.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_2.png" alt="">
                     乡风文明
                 </div>
                 
@@ -93,7 +93,7 @@
         <div class="main_center fl">
             <div class="center_text" style="position: relative">
                 <div class="main_title">
-                    <img src="img/title_3.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_3.png" alt="">
                     区域地图
                 </div>
                 <div class="describ"  style="width:27%;height:90%">
@@ -105,11 +105,16 @@
                          <centerLeft2 ref="t"/>
                      </div>
                      
-                 <div style="max-width:200px;float:left;height:100%;position: absolute;right: 27%;top:10px;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
-                     <div class="dddd" @click="toDetailInit(item)" style="display:inline-block; margin: 10px 10px 0;width:80px;height:20px" v-for="(item,index) in orgBranch" :key="index">
+                 <div style="width:200px;float:left;height:40px;position: absolute;right: 27%;top:80px;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
+                      <select v-model="selectItem" @change="selectFn($event)" style="background: transparent;width:100%;height:40px" size='10'> 
+                        <!-- <option selected="selected" value="">{{orgBranch[0].unionOrgName}}</option> -->
+                         <option selected="selected" value="">请选择下级机构</option>
+                        <option style="background: rgba(0,0,0,0.5);"  v-for="(item,index) in org" :value="item.unionCorpid"  :key="index">{{item.unionOrgName}}</option>
+                    </select>
+                     <!-- <div class="dddd" @click="toDetailInit(item)" style="display:inline-blockindex margin: 10px 10px 0;width:80px;height:20px" v-for="(item,index) in orgBranch" :key="index">
                          <div v-if="index>0"><span style="width:10px;height:10px;background:#d00;display:inline-block;" :style="{background:colors2[index]}"></span> {{item.unionOrgName}}</div>
                         
-                         </div>
+                         </div> -->
 
                  </div>
 
@@ -120,7 +125,7 @@
         <div class="main_right fr">
             <div class="right_1">
                 <div class="main_title">
-                    <img src="img/title_4.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_4.png" alt="">
                     你钉我办
                 </div>
                  <Echart class="echarts" :subId='subId' :options="optionsym" id="chart_4" height="280px" width="100%" ></Echart>
@@ -129,7 +134,7 @@
 
             <div class="right_2">
                 <div class="main_title">
-                    <img src="img/title_5.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_5.png" alt="">
                    党员137
                 </div>
                <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
@@ -153,7 +158,7 @@
     <div class="data_bottom">
         <div class="bottom_1 fl">
             <div class="main_title">
-                <img src="img/title_6.png" alt="">
+                <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                 乡村调解反馈
             </div>
     
@@ -162,7 +167,7 @@
         <div class="bottom_center fl">
             <div class="bottom_2 fl">
                 <div class="main_title" style="width:380px;margin-left: -190px">
-                    <img src="img/title_6.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                     党务村务民主协商监督月例会
                 </div>
 
@@ -185,7 +190,7 @@
             </div>
             <div class="bottom_3 fl">
                 <div class="main_title">
-                    <img src="img/title_6.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                     惠农电商
                 </div>
                  <Echart class="echarts" :subId='subId' :options="optionsmall" id="chart_3" height="200px" width="100%" ></Echart>
@@ -193,7 +198,7 @@
         </div>
         <div class="bottom_4 fr">
             <div class="main_title">
-                <img src="img/title_5.png" alt="">
+                <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_5.png" alt="">
                 群防群治
             </div>
              <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
@@ -303,7 +308,9 @@ export default {
             "#8378ea",
             "#ff9f7f",
           ],
-          orgBranch:[]
+          orgBranch:[],
+          org:[],
+          selectItem:''
     }
   },
   computed:{
@@ -314,8 +321,11 @@ export default {
   },
     watch: {
         cdata(val) {
-            console.log("999",val)
             this.orgBranch = val.allData
+            this.org = val.allData.filter((v,index)=>{
+                console.log(v)
+                return index > 0
+            })
             this.getAllPic(val)
             this.getData(this.$store.state.id1)
         }
@@ -360,9 +370,14 @@ export default {
    },
   methods: {
       toDetailInit(init){
-         console.log("tt",this.$refs.t,init)
+       //  console.log("tt",this.$refs.t,init)
         // this.$refs.t.$children[0].$children[0].handleMapRandomSelect()
         this.getDataInit(init.unionCorpid)
+      },
+      selectFn(){
+         console.log("tt",this.selectItem)
+         if(this.selectItem == '') this.selectItem=this.orgBranch[0].unionCorpid
+          this.getDataInit(this.selectItem)
       },
      getDataInit(id){
         this.$store.commit("setId1", id)

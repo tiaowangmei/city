@@ -17,11 +17,6 @@ const proxyTable= {
         // 请求的目标主机
         target: 'http://szdp.hnyfsk.com/',
         changeOrigin: true,
-    },
-    '/meiling_wu': {
-        // 请求的目标主机
-        target: 'https://gitee.com/',
-        changeOrigin: true,
     }
 }
 module.exports = {
