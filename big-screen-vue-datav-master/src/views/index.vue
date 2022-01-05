@@ -15,26 +15,26 @@
 </div>
 <!--header结束-->
 
-<!--content开始-->
+<!--content开始 https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/-->
 <div class="data_content" :style="{backgroundImage: 'url(' + srcImgUrl + ')', backgroundSize:'100% 100%', backgroundRepeat: 'no-repeat'}">
     <div class="data_time"  v-if="false">
-        <img src="img/data_time.png" alt="" class="fl">
+        <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/data_time.png" alt="" class="fl">
        {{ dateYear }} {{ dateWeek }} {{ dateDay }}
     </div>
     <div class="data_info">
         <div :class="index === 1?'info_1 fl':index===2?'info_2 fl':'info_3 fr'" v-for="(item,index) in getUserDataInfo" :key="index">
             <div class="" :class="index === 1?'text_1':index===2?'text_2':'text_3'"> 
                 <div class="fl" v-for="(t,ind) in item " :key="ind">
-                    <img v-if="ind==0 && index == 0" src="../assets/img/info_5.png" alt="" class="fl">
-                    <img v-if="ind==0 && index ==1" src="../assets/img/info_1.png" alt="" class="fl">
-                    <img v-if="ind==0 && index == 2" src="../assets/img/info_8.png" alt="" class="fl">
-                    <img v-if="ind==1&& index == 0" src="../assets/img/info_6.png" alt="" class="fl">
-                    <img v-if="ind==1&& index == 1" src="../assets/img/info_2.png" alt="" class="fl">
-                    <img v-if="ind==1&& index == 2" src="../assets/img/info_9.png" alt="" class="fl">
-                   <img v-if="ind==2&& index == 0" src="../assets/img/info_7.png" alt="" class="fl">
-                    <img v-if="ind==2&& index == 1" src="../assets/img/info_3.png" alt="" class="fl">
-                    <img v-if="ind==2&& index == 2" src="../assets/img/info_10.png" alt="" class="fl"> 
-                    <img v-if="ind==3" src="../assets/img/info_4.png" alt="" class="fl">
+                    <img v-if="ind==0 && index == 0" :src='a' alt="" class="fl">
+                    <img v-if="ind==0 && index ==1" :src='b'  alt="" class="fl">
+                    <img v-if="ind==0 && index == 2" :src='c' alt="" class="fl">
+                    <img v-if="ind==1&& index == 0" :src='d'  alt="" class="fl">
+                    <img v-if="ind==1&& index == 1" :src='e'  alt="" class="fl">
+                    <img v-if="ind==1&& index == 2" :src='f'  alt="" class="fl">
+                   <img v-if="ind==2&& index == 0" :src='g'   alt="" class="fl">
+                    <img v-if="ind==2&& index == 1" :src='h'   alt="" class="fl">
+                    <img v-if="ind==2&& index == 2" :src='i'   alt="" class="fl"> 
+                    <img v-if="ind==3" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_4.png" alt="" class="fl">
                     <div class="fl">
                         <p>{{t.kpiName}}</p>
                         <p>{{t.stats}}</p>
@@ -49,7 +49,7 @@
         <div class="main_left fl">
             <div class="left_1">
                 <div class="main_title">
-                    <img src="img/title_1.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_1.png" alt="">
                     特殊人群管理
                 </div>
                 <div style="width:100%;height:100%" v-if="isPerson">
@@ -70,7 +70,7 @@
             </div>
             <div class="left_2">
                 <div class="main_title">
-                    <img src="img/title_2.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_2.png" alt="">
                     乡风文明
                 </div>
                 
@@ -78,12 +78,12 @@
                    <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:75%;height:100%;float:left" >
+                 <div style="width:80%;height:100%;float:left" >
                     <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
                 </div>
-               <div style="width:25%;height:100%;float:left;margin-top:4%">
+               <div style="width:20%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.x.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm1(index)}"></span>
+                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
                        <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
                    </p>
                </div>
@@ -93,26 +93,15 @@
         <div class="main_center fl">
             <div class="center_text" style="position: relative">
                 <div class="main_title">
-                    <img src="img/title_3.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_3.png" alt="">
                     区域地图
                 </div>
-                <div class="describ"  style="width:27%;height:90%">
+                <div class="describ"  style="width:30%;height:90%">
                     <div>{{name}}</div>
                       {{remark}}
                  </div>
-                 <div style="width:73%;height:90%"  v-if="subId">
-                     <div style="height:100% ;float:left" :style="{width:orgBranch.length>1 && orgBranch[0].parentId!=0?'calc(100% - 120px)':'100%'}">
-                         <centerLeft2 ref="t"/>
-                     </div>
-                     
-                 <div style="max-width:200px;float:left;height:100%;position: absolute;right: 27%;top:10px;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
-                     <div class="dddd" @click="toDetailInit(item)" style="display:inline-block; margin: 10px 10px 0;width:80px;height:20px" v-for="(item,index) in orgBranch" :key="index">
-                         <div v-if="index>0"><span style="width:10px;height:10px;background:#d00;display:inline-block;" :style="{background:colors2[index]}"></span> {{item.unionOrgName}}</div>
-                        
-                         </div>
-
-                 </div>
-
+                 <div style="width:70%;height:100%" v-if="subId">
+                      <centerLeft2/>
                  </div>
                
             </div>
@@ -120,7 +109,7 @@
         <div class="main_right fr">
             <div class="right_1">
                 <div class="main_title">
-                    <img src="img/title_4.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_4.png" alt="">
                     你钉我办
                 </div>
                  <Echart class="echarts" :subId='subId' :options="optionsym" id="chart_4" height="280px" width="100%" ></Echart>
@@ -129,17 +118,17 @@
 
             <div class="right_2">
                 <div class="main_title">
-                    <img src="img/title_5.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_5.png" alt="">
                    党员137
                 </div>
                <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
                     <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:75%;height:100%;float:left" >
+                 <div style="width:80%;height:100%;float:left" >
                     <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
                 </div>
-               <div style="width:25%;height:100%;float:left;margin-top:4%">
+               <div style="width:20%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.m.oData" :key="index" style="clear:both">
                        <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
                        <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
@@ -153,7 +142,7 @@
     <div class="data_bottom">
         <div class="bottom_1 fl">
             <div class="main_title">
-                <img src="img/title_6.png" alt="">
+                <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                 乡村调解反馈
             </div>
     
@@ -162,7 +151,7 @@
         <div class="bottom_center fl">
             <div class="bottom_2 fl">
                 <div class="main_title" style="width:380px;margin-left: -190px">
-                    <img src="img/title_6.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                     党务村务民主协商监督月例会
                 </div>
 
@@ -185,7 +174,7 @@
             </div>
             <div class="bottom_3 fl">
                 <div class="main_title">
-                    <img src="img/title_6.png" alt="">
+                    <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                     惠农电商
                 </div>
                  <Echart class="echarts" :subId='subId' :options="optionsmall" id="chart_3" height="200px" width="100%" ></Echart>
@@ -193,25 +182,10 @@
         </div>
         <div class="bottom_4 fr">
             <div class="main_title">
-                <img src="img/title_5.png" alt="">
+                <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_5.png" alt="">
                 群防群治
             </div>
-             <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
-                     <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
-              </div>
-                <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:75%;height:100%;float:left" >
-                    <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
-                </div>
-               <div style="width:25%;height:100%;float:left;margin-top:4%">
-                   <p v-for="(n,index) in cdata.q.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm1(index)}"></span>
-                       <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
-                   </p>
-               </div>
-              </div>
-
-           
+            <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
         </div>
     </div>
 </div>
@@ -231,6 +205,15 @@ export default {
   mixins: [ drawMixin ],
   data() {
     return { 
+        a:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_5.png',
+        b:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_1.png',
+        c:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_8.png',
+        d:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_6.png',
+        e:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_2.png',
+        f:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_9.png',
+        g:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_7.png',
+        h:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_3.png',
+        i:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_10.png',
       timing: null,
       loading: true,
       dateDay: null,
@@ -266,44 +249,7 @@ export default {
             "#ffdb5c",
             "#ff9f7f",
             "#8378ea"
-          ],
-           colors1:[
-             "#8378ea",
-            "#fb7293",
-            "#37a2da",
-            "#e7bcf3",
-            "#32c5e9",
-            "#9fe6b8",
-            "#ffdb5c",
-            "#ff9f7f",
-          ],
-          colors2:[
-             "#8378ea",
-            "#fb7293",
-            "#37a2da",
-             "#fb7293",
-            "#37a2da",
-            "#e7bcf3",
-            "#32c5e9",
-            "#9fe6b8",
-            "#ffdb5c",
-            "#ff9f7f",
-            "#8378ea",
-            "#e7bcf3",
-            "#32c5e9",
-            "#9fe6b8",
-            "#ffdb5c", 
-            "#fb7293",
-            "#37a2da",
-            "#e7bcf3",
-            "#32c5e9",
-            "#9fe6b8",
-            "#ffdb5c",
-            "#ff9f7f",
-            "#8378ea",
-            "#ff9f7f",
-          ],
-          orgBranch:[]
+          ]
     }
   },
   computed:{
@@ -314,8 +260,6 @@ export default {
   },
     watch: {
         cdata(val) {
-            console.log("999",val)
-            this.orgBranch = val.allData
             this.getAllPic(val)
             this.getData(this.$store.state.id1)
         }
@@ -326,6 +270,7 @@ export default {
     this.timeFn()
     this.cancelLoading()
     window.addEventListener('resize', () => {
+    console.log('resize')
     this.resize()
 })
 
@@ -338,8 +283,6 @@ export default {
             let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
              this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
                  let d = re.data.data.orgBranch
-                   
-                // this.orgBranch = d
                  if(d.length == 1){
                       this.$store.commit("setInitId", d[0].parentId)
                       this.axios.post('/ding//approveDetail/getInfo?corpId='+d[0].parentId, {}).then(r=>{
@@ -359,285 +302,8 @@ export default {
         })
    },
   methods: {
-      toDetailInit(init){
-         console.log("tt",this.$refs.t,init)
-        // this.$refs.t.$children[0].$children[0].handleMapRandomSelect()
-        this.getDataInit(init.unionCorpid)
-      },
-     getDataInit(id){
-        this.$store.commit("setId1", id)
-        this.axios.post('/ding//approveDetail/getInfo?corpId='+id, {}).then(res=>{
-          this.allData = res.data.data
-          let p={},d={},x={},m={},q={},hy={},online={},mall={}
-          if(res.data.data.orgBranch.length == 1){
-              let data = res.data.data.villageData
-              let person = data.filter(val=>{return val.templateName == '特殊人群管理'})
-              let zPerson = person.filter(val=>{return val.type == '重点人群'})
-              let rPerson = person.filter(val=>{return val.type == '弱势群体'})
-              let dangy  = data.filter(val=>{return val.templateName == '党员137'})
-              let xfwm  = data.filter(val=>{return val.templateName == '乡风文明'})
-              let qfqz  = data.filter(val=>{return val.templateName == '群防群治'})
-              let ylh  = data.filter(val=>{return val.templateName == '党务村务民主协商监督月例会'})
-              let yueYlh = ylh.filter(val=>{return val.type == '当月'})
-               let nianYlh = ylh.filter(val=>{return val.type == '当年'})
-                mall.type = 'pie'
-                online.type = 'pie'
-                d.xData = [];
-                d.xDataAll =[];
-                d.oData =[]
-                d.xData = person.map(val=>{
-                    return val.name
-                })
-                d.xDataAll =person.map(val=>{
-                    return val.number
-                })
-                d.oData = person.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-                d.rPerson = rPerson.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-                 d.zPerson = zPerson.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-                m.xData = [];
-                m.xDataAll =[];
-                m.oData =[]
-                m.type = 'bar'
-                m.xData = dangy.map(val=>{
-                    return val.name
-                })
-                 m.xDataAll =dangy.map(val=>{
-                    return val.number
-                })
-                m.oData = dangy.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-
-                x.xData = [];
-                x.xDataAll =[];
-                x.oData =[]
-                x.xData = xfwm.map(val=>{
-                    return val.name
-                })
-                 x.xDataAll =xfwm.map(val=>{
-                    return val.number
-                })
-                x.oData = xfwm.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-
-
-               q.xData = [];
-               q.xDataAll =[];
-                q.oData =[]
-                q.xData = qfqz.map(val=>{
-                    return val.name
-                })
-                q.xDataAll =qfqz.map(val=>{
-                    return val.number
-                })
-                q.oData = qfqz.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-
-           
-
-                hy.xData = [];
-                hy.xDataAll =[];
-                hy.oData =[]
-                hy.type = 'line'
-                hy.xData = ylh.map(val=>{
-                    return val.name
-                })
-               hy.xDataAll =ylh.map(val=>{
-                    return val.number
-                })
-                hy.oData = ylh.map(val=>{
-                    return {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-                
-                hy.type = 'pie'
-                hy.yueYlh = yueYlh.map(val=>{
-                    return  {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-                hy.nianYlh = nianYlh.map(val=>{
-                    return  {
-                         name: val.name,
-                         value:val.number
-                    }
-                })
-          }else{
-               let data =  res.data.data?.template
-                mall.type = undefined
-                online.type = undefined
-          data.forEach(val=>{
-            if(val.name == '特殊人群管理'){
-                d.xData = [];
-                d.xDataAll =[];
-                d.oData =[]
-                if(val.list.length > 0){
-                 val.list.forEach(val => {
-                d.xData.push(val.orgName)
-                d.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    d.oData.push(o)
-                });   
-                }else{
-                d.xData = [];
-                d.xDataAll =[];
-                d.oData =[]
-                }
-               
-           }else if(val.name == '党员137'){
-                m.xData = [];
-                m.xDataAll =[];
-                m.oData =[]
-                val.list.forEach(val => {
-                m.xData.push(val.orgName)
-                m.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    m.oData.push(o)
-                });   
-           }
-             else if(val.name == '群防群治'){
-                 q.xData = [];
-                q.xDataAll =[];
-                q.oData =[]
-                val.list.forEach(val => {
-                q.xData.push(val.orgName)
-                q.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    q.oData.push(o)
-                });   
-             }
-
-             else if(val.name == '乡风文明'){
-                 x.xData = [];
-                x.xDataAll =[];
-                x.oData =[]
-                val.list.forEach(val => {
-                x.xData.push(val.orgName)
-                x.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    x.oData.push(o)
-                });   
-             }
-             else if(val.name == '党务村务民主协商监督月例会'){
-                 hy.xData = [];
-                hy.xDataAll =[];
-                hy.oData =[]
-                val.list.forEach(val => {
-                hy.xData.push(val.orgName)
-                hy.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    hy.oData.push(o)
-                });   
-             }
-          })
-          }
-           let datathree =  res.data.data?.template
-              let ndwb  = datathree.filter(val=>{return val.name == '你钉我办'})[0]
-              let hnds  = datathree.filter(val=>{return val.name == '惠农电商'})[0]
-              let tangj  = datathree.filter(val=>{return val.name == '乡村调解反馈'})[0]
-                 mall.xData = [];
-                mall.xDataAll =[];
-                mall.oData =[]
-                hnds.list.forEach(val => {
-                mall.xData.push(val.orgName)
-                mall.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    mall.oData.push(o)
-                });
-
-                 p.xData = [];
-                p.xDataAll =[];
-                p.oData =[]
-                ndwb.list.forEach(val => {
-                p.xData.push(val.orgName)
-                p.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    p.oData.push(o)
-                });   
-             
-                online.xData = [];
-                online.xDataAll =[];
-                online.oData =[]
-                tangj.list.forEach(val => {
-                online.xData.push(val.orgName)
-                online.xDataAll.push(val.stats)
-                let o = {
-                    value:val.stats,
-                    name:val.orgName
-                }
-                    online.oData.push(o)
-                });   
-
-            let dataA ={
-                d:d,
-                p:p,
-                q:q,
-                online:online,
-                mall:mall,
-                x:x,
-                m:m,
-                hy:hy,
-                allData:this.allData.orgBranch
-            }
-            console.log("fff",this.allData.orgBranch )
-          this.$store.commit("setData", dataA)  
-        })
-    },
        colorConfirm(e){
         return this.colors[e]
-    },
-       colorConfirm1(e){
-        return this.colors1[e]
     },
       resize() {
 	// 记录开发时候的尺寸
@@ -868,6 +534,30 @@ export default {
                     }
                 },
                 data: val.online.oData
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
+                    }
+                },
+                data:val.online.oData
             }]
         }
         }
@@ -936,6 +626,30 @@ export default {
                         }
                     },
                     data: val.hy.yueYlh,
+                }, {
+                    name: '',
+                    type: 'pie',
+                    clockwise: false,
+                    silent: true,
+                    minAngle: 20, //最小的扇区角度（0 ~ 360）
+                    center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                    radius: [0, 45], //饼图的半径
+                    itemStyle: { //图形样式
+                        normal: {
+                            borderColor: '#1e2239',
+                            borderWidth: 1.5,
+                            opacity: 0.21,
+                            color:function(e){
+                                return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                            }
+                        }
+                    },
+                    label: { //标签的位置
+                        normal: {
+                            show: false,
+                        }
+                    },
+                    data:  val.hy.yueYlh,
                 }]
             }
 
@@ -995,6 +709,30 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
+                    }
+                },
+                data: val.hy.nianYlh
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['30%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
                     }
                 },
                 data: val.hy.nianYlh
@@ -1203,6 +941,30 @@ export default {
                     }
                 },
                 data: val.d.zPerson
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
+                    }
+                },
+                data: val.d.zPerson
             }]
         }
 
@@ -1262,6 +1024,30 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
+                    }
+                },
+                data: val.d.rPerson
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
                     }
                 },
                 data: val.d.rPerson
@@ -1489,16 +1275,6 @@ export default {
             }
          }
 
-      var c =[
-             "#8378ea",
-            "#fb7293",
-            "#37a2da",
-            "#e7bcf3",
-            "#32c5e9",
-            "#9fe6b8",
-            "#ffdb5c",
-            "#ff9f7f",
-          ]
             var legendDataq= val.q.xData
             var serieDataq = [];
             var metaDateq = val.q.type == 'pie'?val.q.oData:val.q.xDataAll
@@ -1514,7 +1290,7 @@ export default {
                         borderColor: '#1e2239',
                         borderWidth: 1.5,
                         color: function(e){
-                            return c[e.dataIndex]
+                            return colors[e.dataIndex]
                             }
                     },
                 },
@@ -1600,6 +1376,10 @@ export default {
                             return d[e.dataIndex]+"-"+e.data
                         }
                     },
+                    // legend: { //图例组件，颜色和名字
+                    //     show:true,
+                    //     orient: 'vertical',
+                    // },
                     xAxis: [
                         {
                             type: 'category',
@@ -1697,12 +1477,5 @@ export default {
 }
 .lo-title1 div:nth-child(1){
     padding-left:10%;
-}
-.dddd{
-    cursor: pointer;
-
-}
-.dddd:hover{
-    color: #d00;
 }
 </style>
