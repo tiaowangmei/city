@@ -15,7 +15,7 @@
 </div>
 <!--header结束-->
 
-<!--content开始-->
+<!--content开始 https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/-->
 <div class="data_content" :style="{backgroundImage: 'url(' + srcImgUrl + ')', backgroundSize:'100% 100%', backgroundRepeat: 'no-repeat'}">
     <div class="data_time"  v-if="false">
         <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/data_time.png" alt="" class="fl">
@@ -25,6 +25,7 @@
         <div :class="index === 1?'info_1 fl':index===2?'info_2 fl':'info_3 fr'" v-for="(item,index) in getUserDataInfo" :key="index">
             <div class="" :class="index === 1?'text_1':index===2?'text_2':'text_3'"> 
                 <div class="fl" v-for="(t,ind) in item " :key="ind">
+<<<<<<< HEAD
                     <img v-if="ind==0 && index == 0" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_5.png" alt="" class="fl">
                     <img v-if="ind==0 && index ==1" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_1.png" alt="" class="fl">
                     <img v-if="ind==0 && index == 2" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_8.png" alt="" class="fl">
@@ -34,6 +35,17 @@
                    <img v-if="ind==2&& index == 0" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_7.png" alt="" class="fl">
                     <img v-if="ind==2&& index == 1" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_3.png" alt="" class="fl">
                     <img v-if="ind==2&& index == 2" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_10.png" alt="" class="fl"> 
+=======
+                    <img v-if="ind==0 && index == 0" :src='a' alt="" class="fl">
+                    <img v-if="ind==0 && index ==1" :src='b'  alt="" class="fl">
+                    <img v-if="ind==0 && index == 2" :src='c' alt="" class="fl">
+                    <img v-if="ind==1&& index == 0" :src='d'  alt="" class="fl">
+                    <img v-if="ind==1&& index == 1" :src='e'  alt="" class="fl">
+                    <img v-if="ind==1&& index == 2" :src='f'  alt="" class="fl">
+                   <img v-if="ind==2&& index == 0" :src='g'   alt="" class="fl">
+                    <img v-if="ind==2&& index == 1" :src='h'   alt="" class="fl">
+                    <img v-if="ind==2&& index == 2" :src='i'   alt="" class="fl"> 
+>>>>>>> 11cde84a0b1947c372b0f13f25d68ebe506cd442
                     <img v-if="ind==3" src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_4.png" alt="" class="fl">
                     <div class="fl">
                         <p>{{t.kpiName}}</p>
@@ -78,12 +90,12 @@
                    <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:75%;height:100%;float:left" >
+                 <div style="width:80%;height:100%;float:left" >
                     <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
                 </div>
-               <div style="width:25%;height:100%;float:left;margin-top:4%">
+               <div style="width:20%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.x.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm1(index)}"></span>
+                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
                        <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
                    </p>
                </div>
@@ -96,7 +108,7 @@
                     <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_3.png" alt="">
                     区域地图
                 </div>
-                <div class="describ"  style="width:27%;height:90%">
+                <div class="describ"  style="width:30%;height:90%">
                     <div>{{name}}</div>
                       {{remark}}
                  </div>
@@ -141,10 +153,10 @@
                     <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:75%;height:100%;float:left" >
+                 <div style="width:80%;height:100%;float:left" >
                     <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
                 </div>
-               <div style="width:25%;height:100%;float:left;margin-top:4%">
+               <div style="width:20%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.m.oData" :key="index" style="clear:both">
                        <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
                        <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
@@ -201,22 +213,7 @@
                 <img src="https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/title_5.png" alt="">
                 群防群治
             </div>
-             <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
-                     <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
-              </div>
-                <div  style="width:100%;height:calc(100% - 35px);"  v-else>
-                 <div style="width:75%;height:100%;float:left" >
-                    <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
-                </div>
-               <div style="width:25%;height:100%;float:left;margin-top:4%">
-                   <p v-for="(n,index) in cdata.q.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm1(index)}"></span>
-                       <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
-                   </p>
-               </div>
-              </div>
-
-           
+            <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
         </div>
     </div>
 </div>
@@ -236,6 +233,15 @@ export default {
   mixins: [ drawMixin ],
   data() {
     return { 
+        a:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_5.png',
+        b:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_1.png',
+        c:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_8.png',
+        d:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_6.png',
+        e:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_2.png',
+        f:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_9.png',
+        g:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_7.png',
+        h:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_3.png',
+        i:'https://gitee.com/meiling_wu/city/raw/master/big-screen-vue-datav-master/src/assets/img/info_10.png',
       timing: null,
       loading: true,
       dateDay: null,
@@ -271,6 +277,7 @@ export default {
             "#ffdb5c",
             "#ff9f7f",
             "#8378ea"
+<<<<<<< HEAD
           ],
            colors1:[
              "#8378ea",
@@ -311,6 +318,9 @@ export default {
           orgBranch:[],
           org:[],
           selectItem:''
+=======
+          ]
+>>>>>>> 11cde84a0b1947c372b0f13f25d68ebe506cd442
     }
   },
   computed:{
@@ -321,11 +331,14 @@ export default {
   },
     watch: {
         cdata(val) {
+<<<<<<< HEAD
             this.orgBranch = val.allData
             this.org = val.allData.filter((v,index)=>{
                 console.log(v)
                 return index > 0
             })
+=======
+>>>>>>> 11cde84a0b1947c372b0f13f25d68ebe506cd442
             this.getAllPic(val)
             this.getData(this.$store.state.id1)
         }
@@ -336,6 +349,7 @@ export default {
     this.timeFn()
     this.cancelLoading()
     window.addEventListener('resize', () => {
+    console.log('resize')
     this.resize()
 })
 
@@ -348,8 +362,6 @@ export default {
             let corpId = query.corpId||'ding0b3219e0d629f0acf5bf40eda33b7ba0'
              this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
                  let d = re.data.data.orgBranch
-                   
-                // this.orgBranch = d
                  if(d.length == 1){
                       this.$store.commit("setInitId", d[0].parentId)
                       this.axios.post('/ding//approveDetail/getInfo?corpId='+d[0].parentId, {}).then(r=>{
@@ -369,6 +381,7 @@ export default {
         })
    },
   methods: {
+<<<<<<< HEAD
       toDetailInit(init){
        //  console.log("tt",this.$refs.t,init)
         // this.$refs.t.$children[0].$children[0].handleMapRandomSelect()
@@ -648,11 +661,10 @@ export default {
           this.$store.commit("setData", dataA)  
         })
     },
+=======
+>>>>>>> 11cde84a0b1947c372b0f13f25d68ebe506cd442
        colorConfirm(e){
         return this.colors[e]
-    },
-       colorConfirm1(e){
-        return this.colors1[e]
     },
       resize() {
 	// 记录开发时候的尺寸
@@ -883,6 +895,30 @@ export default {
                     }
                 },
                 data: val.online.oData
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
+                    }
+                },
+                data:val.online.oData
             }]
         }
         }
@@ -951,6 +987,30 @@ export default {
                         }
                     },
                     data: val.hy.yueYlh,
+                }, {
+                    name: '',
+                    type: 'pie',
+                    clockwise: false,
+                    silent: true,
+                    minAngle: 20, //最小的扇区角度（0 ~ 360）
+                    center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                    radius: [0, 45], //饼图的半径
+                    itemStyle: { //图形样式
+                        normal: {
+                            borderColor: '#1e2239',
+                            borderWidth: 1.5,
+                            opacity: 0.21,
+                            color:function(e){
+                                return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                            }
+                        }
+                    },
+                    label: { //标签的位置
+                        normal: {
+                            show: false,
+                        }
+                    },
+                    data:  val.hy.yueYlh,
                 }]
             }
 
@@ -1010,6 +1070,30 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
+                    }
+                },
+                data: val.hy.nianYlh
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['30%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
                     }
                 },
                 data: val.hy.nianYlh
@@ -1218,6 +1302,30 @@ export default {
                     }
                 },
                 data: val.d.zPerson
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
+                    }
+                },
+                data: val.d.zPerson
             }]
         }
 
@@ -1277,6 +1385,30 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
+                    }
+                },
+                data: val.d.rPerson
+            }, {
+                name: '',
+                type: 'pie',
+                clockwise: false,
+                silent: true,
+                minAngle: 20, //最小的扇区角度（0 ~ 360）
+                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                radius: [0, 45], //饼图的半径
+                itemStyle: { //图形样式
+                    normal: {
+                        borderColor: '#1e2239',
+                        borderWidth: 1.5,
+                        opacity: 0.21,
+                         color:function(e){
+                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
+                        }
+                    }
+                },
+                label: { //标签的位置
+                    normal: {
+                        show: false,
                     }
                 },
                 data: val.d.rPerson
@@ -1504,16 +1636,6 @@ export default {
             }
          }
 
-      var c =[
-             "#8378ea",
-            "#fb7293",
-            "#37a2da",
-            "#e7bcf3",
-            "#32c5e9",
-            "#9fe6b8",
-            "#ffdb5c",
-            "#ff9f7f",
-          ]
             var legendDataq= val.q.xData
             var serieDataq = [];
             var metaDateq = val.q.type == 'pie'?val.q.oData:val.q.xDataAll
@@ -1529,7 +1651,7 @@ export default {
                         borderColor: '#1e2239',
                         borderWidth: 1.5,
                         color: function(e){
-                            return c[e.dataIndex]
+                            return colors[e.dataIndex]
                             }
                     },
                 },
@@ -1615,6 +1737,10 @@ export default {
                             return d[e.dataIndex]+"-"+e.data
                         }
                     },
+                    // legend: { //图例组件，颜色和名字
+                    //     show:true,
+                    //     orient: 'vertical',
+                    // },
                     xAxis: [
                         {
                             type: 'category',
@@ -1712,12 +1838,5 @@ export default {
 }
 .lo-title1 div:nth-child(1){
     padding-left:10%;
-}
-.dddd{
-    cursor: pointer;
-
-}
-.dddd:hover{
-    color: #d00;
 }
 </style>
