@@ -45,15 +45,21 @@
         </div>
     </div>
 
-    <div class="data_main">
+    <div class="data_main" v-if="isNeed">
         <div class="main_left fl">
             <div class="left_1">
                 <div class="main_title">
-                    <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_1.png" alt="">
+                    <img @error="imgLoadError()" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_1.png" alt="">
                     特殊人群管理
                 </div>
-                <div style="width:100%;height:100%" v-if="isPerson">
-                  <Echart :options="options" :subId='subId' class="echarts" id="chart_1" ></Echart>
+                <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                    <div style="width:calc(100% - 100px);height:100%;float:left">
+                       <Echart :options="options" :subId='subId' class="echarts" id="chart_1"  ref="terq"></Echart>
+                    </div>
+                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
+                      <drop :labelProperty='false' :dataList='tsrq' @change="selectFnPr"></drop>
+                   </div>
+                   
                </div>
                <div style="width:100%;height:100%;position: relative;" v-else>
                    <div style="width:45%;height:100% ;float:left">
@@ -100,21 +106,11 @@
                     <div>{{name}}</div>
                       {{remark}}
                  </div>
-                 <div style="width:73%;height:90%"  v-if="subId">
-                       <div style="width:200px;height:40px;position: absolute;right: calc(50% - 100px);top:30px;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
-                    <drop :dataList='org' @change="selectFn"></drop>
-                      <!-- <select v-model="selectItem" @change="selectFn($event)" style="background: transparent;width:100%;height:40px"> 
-                         <option selected="selected" value="">请选择下级机构</option>
-                        <option style="background: rgba(0,0,0,0.5);"  v-for="(item,index) in org" :value="item.unionCorpid"  :key="index">{{item.unionOrgName}}</option>
-                    </select> -->
-                     <!-- <div class="dddd" @click="toDetailInit(item)" style="display:inline-blockindex margin: 10px 10px 0;width:80px;height:20px" v-for="(item,index) in orgBranch" :key="index">
-                         <div v-if="index>0"><span style="width:10px;height:10px;background:#d00;display:inline-block;" :style="{background:colors2[index]}"></span> {{item.unionOrgName}}</div>
-                        
-                         </div> -->
-
-                 </div>
-
-                     <div style="width:100% ;" :style="{height:orgBranch.length>1 && orgBranch[0].parentId!=0?'calc(100% - 4px)':'100%',marginTop:orgBranch.length>1 && orgBranch[0].parentId!=0?'50px':0}">
+                 <div  class="bg-color-black" style="width:73%;height:90%"  v-if="subId">
+                    <div class="bg-color-black" style="width:200px;height:40px;position: absolute;right: 27%;top:30px;z-index: 9999;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
+                       <drop :dataList='org' @change="selectFn"></drop>
+                    </div>
+                     <div style="height:100% ;" :style="{width:orgBranch.length>1 && orgBranch[0].parentId!=0?'calc(100% - 200px)':'100%'}">
                          <centerLeft2 ref="t"/>
                      </div>
                      
@@ -129,8 +125,18 @@
                     <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_4.png" alt="">
                     你钉我办
                 </div>
-                 <Echart class="echarts" :subId='subId' :options="optionsym" id="chart_4" height="280px" width="100%" ></Echart>
-            </div>
+
+                 <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                    <div style="width:calc(100% - 100px);height:100%;float:left">
+                       <Echart class="echarts" ref="ndwb" :subId='subId' :options="optionsym" id="chart_4" height="280px" width="100%" ></Echart>
+           
+                    </div>
+                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
+                      <drop :labelProperty='false' :dataList='ndwb' @change="selectFnndwb"></drop>
+                   </div>
+                   
+               </div>
+                 </div>
 
 
             <div class="right_2">
@@ -162,9 +168,16 @@
                 <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                 乡村调解反馈
             </div>
-    
-             <Echart class="echarts" :subId='subId' :options="optionsxctj" id="chart_3" height="100px" width="100%" ></Echart>
-        </div>
+               <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                    <div style="width:calc(100% - 100px);height:100%;float:left">
+                       <Echart class="echarts" ref="xctj" :subId='subId' :options="optionsxctj" id="chart_3" height="100px" width="100%" ></Echart>
+                    </div>
+                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
+                      <drop :labelProperty='false' :dataList='xctj' @change="selectFnndwb"></drop>
+                   </div>
+                   
+               </div>
+            </div>
         <div class="bottom_center fl">
             <div class="bottom_2 fl">
                 <div class="main_title" style="width:380px;margin-left: -190px">
@@ -194,8 +207,17 @@
                     <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                     惠农电商
                 </div>
-                 <Echart class="echarts" :subId='subId' :options="optionsmall" id="chart_3" height="200px" width="100%" ></Echart>
-            </div>
+                <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                    <div style="width:calc(100% - 100px);height:100%;float:left">
+                       <Echart class="echarts" ref="hnds" :subId='subId' :options="optionsmall" id="chart_3" height="200px" width="100%" ></Echart>
+            
+                    </div>
+                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
+                      <drop :labelProperty='false' :dataList='hnds' @change="selectFnhnds"></drop>
+                   </div>
+                   
+               </div>
+                </div>
         </div>
         <div class="bottom_4 fr">
             <div class="main_title">
@@ -306,7 +328,12 @@ export default {
           ],
           orgBranch:[],
           org:[],
-          selectItem:''
+          selectItem:'',
+          tsrq:[],
+          xctj:[],
+          ndwb:[],
+          hnds:[],
+          isNeed:true,
     }
   },
   computed:{
@@ -317,9 +344,14 @@ export default {
   },
     watch: {
         cdata(val) {
+             console.log(val)
+             this.tsrq = val.d.oData
+             this.ndwb = val.p.oData
+             this.xctj = val.online.oData
+             
+             this.hnds = val.mall.oData
             this.orgBranch = val.allData
             this.org = val.allData.filter((v,index)=>{
-                console.log(v)
                 return index > 0
             })
             this.getAllPic(val)
@@ -334,6 +366,8 @@ export default {
     window.addEventListener('resize', () => {
     console.log('resize')
     this.resize()
+
+   // imgs.onLoad()
 })
 
   },
@@ -364,15 +398,53 @@ export default {
         })
    },
   methods: {
+      
+      imgLoadError(){
+          this.isNeed = false
+        //console.log("999",d)
+      },
       toDetailInit(init){
-       //  console.log("tt",this.$refs.t,init)
+     // console.log("tt",this.$refs.t,init)
         // this.$refs.t.$children[0].$children[0].handleMapRandomSelect()
         this.getDataInit(init.unionCorpid)
       },
       selectFn(item){
-         console.log("tt",item)
-        // if(this.selectItem == '') this.selectItem=this.orgBranch[0].unionCorpid
+          console.log("tt",item)
           this.getDataInit(item.index.unionCorpid)
+      },
+      selectFnPr(index){
+       
+            let indexT= this.cdata.d.oData.findIndex(v=>v.name == index.index.name)
+            this.$refs.terq.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+      selectFnndwb(index){
+        let indexT= this.cdata.p.oData.findIndex(v=>v.name == index.index.name)
+        this.$refs.ndwb.chart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: indexT
+        })  
+      },
+      selectFnxctj(index){
+        let indexT= this.cdata.online.oData.findIndex(v=>v.name == index.index.name)
+        console.log("this.$refs.xctj",this.$refs.xctj)
+        this.$refs.xctj.chart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: indexT
+        })  
+      },
+      selectFnhnds(index){
+        let indexT= this.cdata.mall.oData.findIndex(v=>v.name == index.index.name)
+        this.$refs.hnds.chart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: indexT
+        })  
       },
      getDataInit(id){
         this.$store.commit("setId1", id)
@@ -762,7 +834,6 @@ export default {
 
          var legendData1= val.online.xData
         var serieData1 = [];
-        //  var metaDate1 = val.online.xDataAll
          var metaDate1 = val.online.xDataAll
          var type1 = val.online.type || 'bar'
          if( val.online.type){
@@ -787,7 +858,7 @@ export default {
         this.optionsxctj ={
                     backgroundColor: 'transparent',
                     color:colors,
-                    grid: {left: '4%',top:"30%",bottom: "5%",right:"4%",containLabel: true},
+                    // grid: {left: '4%',top:"30%",bottom: "5%",right:"4%",containLabel: true},
                      tooltip: {
                         trigger: 'item',
                         formatter: function(e){
@@ -823,29 +894,29 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '30',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
+            // legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '30',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
 
-                icon: 'rect',
-                data: val.d.xData,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            //     icon: 'rect',
+            //     data: val.d.xData,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',
                 clockwise: false, //饼图的扇区是否是顺时针排布
                 minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['30%', '50%'], //饼图的中心（圆心）坐标
+                center: ['50%', '50%'], //饼图的中心（圆心）坐标
                 radius: [40, 60], //饼图的半径
                 avoidLabelOverlap: true, ////是否启用防止标签重叠
                 itemStyle: { //图形样式
@@ -875,30 +946,6 @@ export default {
                     }
                 },
                 data: val.online.oData
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
-                    }
-                },
-                data:val.online.oData
             }]
         }
         }
@@ -915,29 +962,29 @@ export default {
                     formatter: "{a} <br/>{b}: {c} ({d}%)"
                 },
                 color: ['#ffff43','#0035f9', '#f36f8a',  '#25f3e6'],
-                legend: { //图例组件，颜色和名字
-                    left: '60%',
-                    top: '25%',
-                    orient: 'vertical',
-                    itemGap: 12, //图例每项之间的间隔
-                    itemWidth: 16,
-                    itemHeight: 12,
+                // legend: { //图例组件，颜色和名字
+                //     left: '60%',
+                //     top: '25%',
+                //     orient: 'vertical',
+                //     itemGap: 12, //图例每项之间的间隔
+                //     itemWidth: 16,
+                //     itemHeight: 12,
 
-                    icon: 'rect',
-                    data: val.hy.yueYlh,
-                    textStyle: {
-                        color: [],
-                        fontStyle: 'normal',
-                        fontFamily: '微软雅黑',
-                        fontSize: 12,
-                    }
-                },
+                //     icon: 'rect',
+                //     data: val.hy.yueYlh,
+                //     textStyle: {
+                //         color: [],
+                //         fontStyle: 'normal',
+                //         fontFamily: '微软雅黑',
+                //         fontSize: 12,
+                //     }
+                // },
                 series: [{
                     name:'',
                     type: 'pie',
                     clockwise: false, //饼图的扇区是否是顺时针排布
                     minAngle: 20, //最小的扇区角度（0 ~ 360）
-                    center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                    center: ['50%', '50%'], //饼图的中心（圆心）坐标
                     radius: [40, 60], //饼图的半径
                     avoidLabelOverlap: true, ////是否启用防止标签重叠
                     itemStyle: { //图形样式
@@ -973,7 +1020,7 @@ export default {
                     clockwise: false,
                     silent: true,
                     minAngle: 20, //最小的扇区角度（0 ~ 360）
-                    center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                    center: ['50%', '50%'], //饼图的中心（圆心）坐标
                     radius: [0, 45], //饼图的半径
                     itemStyle: { //图形样式
                         normal: {
@@ -1001,23 +1048,23 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#25f3e6','#0035f9', '#f36f8a', '#ffff43'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '25%',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
+            //legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '25%',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
 
-                icon: 'rect',
-                data: val.hy.nianYlh,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            //     icon: 'rect',
+            //     data: val.hy.nianYlh,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',
@@ -1144,29 +1191,29 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '30',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
+            // legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '30',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
 
-                icon: 'rect',
-                data: val.d.xData,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            //     icon: 'rect',
+            //     data: val.d.xData,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',
                 clockwise: false, //饼图的扇区是否是顺时针排布
                 minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                center: ['50%', '50%'], //饼图的中心（圆心）坐标
                 radius: [50, 80], //饼图的半径
                 avoidLabelOverlap: true, ////是否启用防止标签重叠
                 itemStyle: { //图形样式
@@ -1196,30 +1243,6 @@ export default {
                     }
                 },
                 data: val.d.oData
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
-                    }
-                },
-                data: val.d.oData
             }]
         }
 
@@ -1230,23 +1253,23 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '30',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
+            // legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '30',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
 
-                icon: 'rect',
-                data:val.d.zPerson,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            //     icon: 'rect',
+            //     data:val.d.zPerson,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',
@@ -1279,30 +1302,6 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
-                    }
-                },
-                data: val.d.zPerson
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
                     }
                 },
                 data: val.d.zPerson
@@ -1316,23 +1315,23 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '30',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
+            // legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '30',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
 
-                icon: 'rect',
-                data: val.d.rPerson,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            //     icon: 'rect',
+            //     data: val.d.rPerson,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',
@@ -1365,30 +1364,6 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
-                    }
-                },
-                data: val.d.rPerson
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
                     }
                 },
                 data: val.d.rPerson
@@ -1403,36 +1378,36 @@ export default {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            color:['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '30',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
+            color:['#f36f8a', '#ffff43','#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
+            // legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '30',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
 
-                icon: 'rect',
-                data: val.p.xData,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            //     icon: 'rect',
+            //     data: val.p.xData,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',
-                roseType: 'area',
+                // roseType: 'area',
                 clockwise: true, //饼图的扇区是否是顺时针排布
                 minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
+                center: ['50%', '50%'], //饼图的中心（圆心）坐标
                 radius: [50, 80], //饼图的半径
                 avoidLabelOverlap: true, ////是否启用防止标签重叠
                 itemStyle: { //图形样式
                     normal: {
-                        borderColor: '#1e2239',
+                        borderColor: '#0035f9',
                         borderWidth: 1.5,
                         color:function(e){
                             return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
@@ -1454,31 +1429,6 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
-                    }
-                },
-                data: val.p.oData
-            }, {
-                name: '',
-                type: 'pie',
-                roseType: 'area',
-                clockwise: true,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['35%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
                     }
                 },
                 data: val.p.oData
@@ -1560,22 +1510,22 @@ export default {
                 }
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            legend: { //图例组件，颜色和名字
-                left: '60%',
-                top: '30',
-                orient: 'vertical',
-                itemGap: 12, //图例每项之间的间隔
-                itemWidth: 16,
-                itemHeight: 12,
-                icon: 'rect',
-                data: val.mall.oData,
-                textStyle: {
-                    color: [],
-                    fontStyle: 'normal',
-                    fontFamily: '微软雅黑',
-                    fontSize: 12,
-                }
-            },
+            // legend: { //图例组件，颜色和名字
+            //     left: '60%',
+            //     top: '30',
+            //     orient: 'vertical',
+            //     itemGap: 12, //图例每项之间的间隔
+            //     itemWidth: 16,
+            //     itemHeight: 12,
+            //     icon: 'rect',
+            //     data: val.mall.oData,
+            //     textStyle: {
+            //         color: [],
+            //         fontStyle: 'normal',
+            //         fontFamily: '微软雅黑',
+            //         fontSize: 12,
+            //     }
+            // },
             series: [{
                 name:'',
                 type: 'pie',

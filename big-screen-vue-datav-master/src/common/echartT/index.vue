@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-29 19:50:03
+ * @LastEditTime : 2022-01-08 21:35:15
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\common\echartT\index.vue
 -->

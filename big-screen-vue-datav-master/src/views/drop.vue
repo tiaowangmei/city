@@ -1,8 +1,12 @@
 <template>
     <div class="zq-drop-list" @click="onDplOver($event)">
-        <span>请选择下级机构<i></i></span>
-        <ul v-dpl>
-            <li v-for="(item, index) in dataList" :key="index" @click="onLiClick(item, $event)">{{item.unionOrgName}}</li>
+        <span v-if="labelProperty">请选择下级机构<i></i></span>
+        <span v-else>{{choose||'请选择'}}<i></i></span>
+        <ul class="test-1" v-if="labelProperty"  v-show="isShow">
+            <li class="scrollbar-r" v-for="(item, index) in dataList" :key="index" @click="onLiClick(item, $event)">{{item.unionOrgName}}</li>
+        </ul>
+        <ul class="test-1" v-else v-show="isShow">
+            <li class="scrollbar-r" v-for="(item, index) in dataList" :key="index" @click="onLiClick(item,index)">{{item.name}}</li>
         </ul>
     </div>
 </template>
@@ -12,7 +16,9 @@ export default {
     name: "DropDownList",
     data(){
         return {
-            activeIndex:0
+            activeIndex:0,
+            choose:'',
+            isShow:false
         }
     },
     props:{
@@ -26,33 +32,44 @@ export default {
             }
         },
         labelProperty:{
-            type:String,
-            default(){ return "name" }
+            type:Boolean,
+            default(){ return true }
         }
     },
-    directives:{
-        dpl:{
-            bind(el){
-                el.style.display = "none";
-            }
-        }
-    },
+    // directives:{
+    //     dpl:{
+    //         bind(el){
+    //             el.style.display = "none";
+    //         }
+    //     }
+    // },
     methods:{
-        onDplOver(event){
-            let ul = event.currentTarget.childNodes[1];
-            ul.style.display = ul.style.display=="block"?ul.style.display='none':ul.style.display='block';
+        onDplOver(){
+           // let ul = event.currentTarget.childNodes[1];
+            //ul.style.display = ul.style.display=="block"?ul.style.display='none':ul.style.display='block';
+             this.isShow = !this.isShow
         },
-        onDplOut(event){
-            let ul = event.currentTarget.childNodes[1];
-            ul.style.display = "none";
+        onDplOut(){
+           // let ul = event.currentTarget.childNodes[1];
+          //  ul.style.display = "none";
+          this.isShow = false
         },
         onLiClick(item){
-            
-          //  path[1].style.display = "none";
-          //  this.activeIndex = index;
-            this.$emit("change", {
-                index:item,
+            this.choose = item.name
+            this.isShow = false
+           // event.path[1].style.display = "none";
+           // this.activeIndex = index;
+           console.log("item",item)
+           if(this.labelProperty){
+             this.$emit("change", {
+                index:item
             })
+           }else{
+                this.$emit("change", {
+                index:item
+            })
+           }
+           
         }
     },
     computed:{
@@ -99,10 +116,11 @@ export default {
             border-radius: 4px;
             overflow: hidden;
             max-height: 280px;
+            cursor: pointer;
              width: 100%;
              z-index: 999;
-             background: rgba(0,0,0,0.5);
-         overflow:auto;
+             background: rgba(19, 25, 47, 0.6);
+             overflow:auto;
             li{
                 list-style: none;
                 height: 30px;
@@ -122,4 +140,31 @@ export default {
             }
         }
     }
+   .test-1::-webkit-scrollbar {/*滚动条整体样式*/
+
+        width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+
+        height: 1px;
+
+    }
+
+.test-1::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+
+        border-radius: 10px;
+
+         -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+
+        background: #535353;
+
+    }
+
+.test-1::-webkit-scrollbar-track {/*滚动条里面轨道*/
+
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+
+        border-radius: 10px;
+
+        background: rgba(0,0,0,1);
+
+}
 </style>
