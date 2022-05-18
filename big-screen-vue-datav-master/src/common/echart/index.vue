@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-12-06 10:10:22
+ * @LastEditTime : 2022-01-09 17:00:14
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\common\echart\index.vue
 -->
@@ -79,15 +79,19 @@ export default {
     initChart () {
       let $this =this
       let  res = this.dataReturn()
+    //   let features = res.features.map(v=>{
+    //       return v.properties.name
+    //   })
+     
       this.chart.on('click', function (params) {
           let corpId = params.data.id
          
-          if(corpId){
+          if(corpId ){
+           if( $this.$store.state.id1 !='ding0b3219e0d629f0acf5bf40eda33b7ba0') return
                 $this.axios.post('/ding//approveDetail/getInfo?corpId='+corpId, {}).then(re=>{
                     $this.$store.commit("setorgBranch",re.data.data.orgBranch)
-                if($this.options.series.length == 2 || params.dimensionNames[0]=="lng"){
-                 // if(params.dimensionNames[0]=="lng")  $this.$emit('handleMapRandomSelect',params)
-                    }else{
+                    $this.$store.commit("setInitId",corpId)
+                    console.log("re.data.data.orgBranch",params )
                     let all = {}
                     let allCity = res.features.filter(val=>{
                         return val.properties.name == params.name
@@ -101,17 +105,14 @@ export default {
                     }
                     obj.geometry = allCity[0].geometry
                     all.features.push(obj)
-                    let  ids =  re.data.data.orgBranch.filter(val=>{return val.unionOrgName == params.name})[0].unionCorpid
-                    $this.$store.commit("setId", ids)
                     $this.$echarts.registerMap('零陵区',all)
                     $this.$emit('handleMapRandomSelect',params)
                     $this.$echarts.registerMap(params.name,all)
                     $this.chart.setOption( $this.options, true)
-                    }
                 })
                 
            }else{
-             $this.$emit('handleMapRandomSelect',params)
+            // $this.$emit('handleMapRandomSelect',params)
            }
        })
     },

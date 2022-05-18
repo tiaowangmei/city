@@ -10,7 +10,7 @@
 <div class="header">
        <div class="d-flex jc-center" style="position: relative;height:100%">
       <dv-decoration-5 style="width:100%;height:40px;position: absolute;left:0;bottom:0;"/>
-      <div class="title">{{title}}</div>
+      <div class="title"><img style="width: 50px;height: 50px; border-radius: 50%;margin-right: 10px;" src="http://szdp.hnyfsk.com:8080/profile/upload/2022/03/15/20220330164850.png" mode="" />{{title}}</div>
             </div> 
 </div>
 <!--header结束-->
@@ -31,13 +31,13 @@
                     <img v-if="ind==1&& index == 0" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_6.png" alt="" class="fl">
                     <img v-if="ind==1&& index == 1" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_2.png" alt="" class="fl">
                     <img v-if="ind==1&& index == 2" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_9.png" alt="" class="fl">
-                   <img v-if="ind==2&& index == 0" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_7.png" alt="" class="fl">
+                    <img v-if="ind==2&& index == 0" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_7.png" alt="" class="fl">
                     <img v-if="ind==2&& index == 1" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_3.png" alt="" class="fl">
                     <img v-if="ind==2&& index == 2" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_10.png" alt="" class="fl"> 
                     <img v-if="ind==3" src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/info_4.png" alt="" class="fl">
                     <div class="fl">
                         <p>{{t.kpiName}}</p>
-                        <p>{{t.stats}}</p>
+                        <p>{{t.stats}}{{t.kpiName== '激活率'||t.kpiName=='组织在线率'?'%':'' }}</p>
                     </div>
                 </div>
             </div>
@@ -56,17 +56,45 @@
                     <div style="width:calc(100% - 100px);height:100%;float:left">
                        <Echart :options="options" :subId='subId' class="echarts" id="chart_1"  ref="terq"></Echart>
                     </div>
-                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
-                      <drop :labelProperty='false' :dataList='tsrq' @change="selectFnPr"></drop>
+                    <div style="width:130px;height:40px;float:left;z-index: 9999;position: absolute;right:0px;top:20px">
+                      <drop v-if="tsrq.length > 1" :labelProperty='false' :dataList='tsrq' @change="selectFnPr"></drop>
                    </div>
                    
                </div>
                <div style="width:100%;height:100%;position: relative;" v-else>
                    <div style="width:45%;height:100% ;float:left">
-                     <Echart :options="optionsPZ" :subId='subId' class="echarts" id="chart_1" ></Echart>
+                        <div style="width:100%;height:100%;position: relative;">
+                            <div style="width:100%;height:100%">
+                            <Echart :options="optionsPZ" ref="zdrq" :subId='subId' class="echarts" id="chart_1" ></Echart>
+                            </div>
+                            <!-- <div v-if="isP" style="width:130px;height:40px;float:left;z-index: 9999;position: absolute;right:0;top:20px">
+                              <drop v-if="zdrq.length > 1" :labelProperty='false' :dataList='zdrq' @change="selectFnzdrq"></drop>
+                           </div> -->
+                            <div style="width:80px;height:120px;z-index: 9999;position: absolute;right:0;top:20px;font-size:10px">
+                                <p v-for="(n,index) in zdrq" :key="index" style="clear:both;width: 100%;height:15px;overflow:hidden">
+                                    <span style="width:8px;margin-top: 5px;height:5px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                                    <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
+                                </p>
+                            </div>
+                      </div>
+                    
                    </div>
                     <div style="width:45%;height:100% ;float:left">
-                     <Echart :options="optionsPR" :subId='subId' class="echarts" id="chart_1" ></Echart>
+                         <div style="width:100%;height:100%;position: relative;">
+                            <div style="width:100% ;height:100%;float:left">
+                            <Echart :options="optionsPR" ref="rsrq" :subId='subId' class="echarts" id="chart_1" ></Echart>
+                            </div>
+                            <div style="width:80px;height:120px;z-index: 9999;position: absolute;right:0;top:20px;font-size:10px">
+                                <p v-for="(n,index) in rsrq" :key="index" style="clear:both;width: 100%;height:15px;overflow:hidden">
+                                    <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                                    <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
+                                </p>
+                            </div>
+                            <!-- <div style="width:130px;height:40px;z-index: 9999;position: absolute;right:0;top:20px">
+                            <drop v-if="rsrq.length > 1"  :labelProperty='false' :dataList='rsrq' @change="selectFnrsrq"></drop>
+                         </div> -->
+                     </div>
+                     
                    </div>
                    <div class="lo-title" style="width:100%;height:40px;float:left;display:flex">
                        <div>重点人群</div>
@@ -81,7 +109,16 @@
                 </div>
                 
               <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
-                   <Echart class="echarts" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
+                    <div style="width:100%;height:100%;position: relative;">
+                            <div style="width:100% ;height:100%;float:left">
+                            <Echart class="echarts" ref="xfwm" :subId='subId' :options="optionsXFWM" id="chart_2" height="280px" width="100%" ></Echart>
+                   
+                            <!-- <Echart :options="optionsPR" ref="rsrq" :subId='subId' class="echarts" id="chart_1" ></Echart> -->
+                            </div>
+                            <div style="width:130px;height:40px;z-index: 9999;position: absolute;right:0;top:0px">
+                            <drop  :labelProperty='false' :dataList='xfwm' @change="selectFnxfwm"></drop>
+                         </div>
+                     </div>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
                  <div style="width:80%;height:100%;float:left" >
@@ -89,8 +126,8 @@
                 </div>
                <div style="width:20%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.x.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
-                       <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
+                       <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                       <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
                    </p>
                </div>
               </div>
@@ -107,13 +144,12 @@
                       {{remark}}
                  </div>
                  <div  class="bg-color-black" style="width:73%;height:90%"  v-if="subId">
-                    <div class="bg-color-black" style="width:200px;height:40px;position: absolute;right: 27%;top:30px;z-index: 9999;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
+                    <div class="bg-color-black" style="width:200px;height:40px;position: absolute;left: 1%;top:20px;z-index: 9999;" v-if="orgBranch.length>1 && orgBranch[0].parentId!=0">
                        <drop :dataList='org' @change="selectFn"></drop>
                     </div>
                      <div style="height:100% ;" :style="{width:orgBranch.length>1 && orgBranch[0].parentId!=0?'calc(100% - 200px)':'100%'}">
                          <centerLeft2 ref="t"/>
                      </div>
-                     
                
                  </div>
                
@@ -126,13 +162,14 @@
                     你钉我办
                 </div>
 
-                 <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                 <div style="width:100%;height:100%;position: relative;">
                     <div style="width:calc(100% - 100px);height:100%;float:left">
                        <Echart class="echarts" ref="ndwb" :subId='subId' :options="optionsym" id="chart_4" height="280px" width="100%" ></Echart>
            
                     </div>
-                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
-                      <drop :labelProperty='false' :dataList='ndwb' @change="selectFnndwb"></drop>
+                    <div style="width:130px;height:40px;float:left;z-index: 9999;position: absolute;right:0px;top:20px">
+                      <drop v-if="ndwb.length > 1" :labelProperty='false' :dataList='ndwb' @change="selectFnndwb"></drop>
+                      <div v-else>{{ndwb0}}</div>
                    </div>
                    
                </div>
@@ -145,7 +182,18 @@
                    党员137
                 </div>
                <div style="width:100%;height:calc(100% - 35px);" v-if="isPerson">
-                    <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
+                    <!-- <Echart class="echarts" :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
+              -->
+                  <div style="width:100%;height:100%;position: relative;">
+                    <div style="width:calc(100% - 100px);height:100%;float:left">
+                        <Echart class="echarts" ref='dy137' :subId='subId' :options="optionsCB" id="chart_3" height="280px" width="100%" ></Echart>
+             
+                    </div>
+                    <div style="width:130px;height:40px;float:left;z-index: 9999;position: absolute;right:0;top:20px">
+                      <drop v-if="dy137.length > 1" :labelProperty='false' :dataList='dy137' @change="selectFndy137"></drop>
+                   </div>
+                   
+               </div>
               </div>
                 <div  style="width:100%;height:calc(100% - 35px);"  v-else>
                  <div style="width:80%;height:100%;float:left" >
@@ -153,8 +201,8 @@
                 </div>
                <div style="width:20%;height:100%;float:left;margin-top:4%">
                    <p v-for="(n,index) in cdata.m.oData" :key="index" style="clear:both">
-                       <span style="width:15px;height:15px;float:left" :style="{'background':colorConfirm(index)}"></span>
-                       <span style="float:left;width:calc(100% - 15px);height:100%;overflow:hidden">{{n.name}}</span>
+                       <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                       <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
                    </p>
                </div>
               </div>
@@ -168,13 +216,14 @@
                 <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                 乡村调解反馈
             </div>
-               <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+               <div style="width:100%;height:100%;position: relative;">
                     <div style="width:calc(100% - 100px);height:100%;float:left">
                        <Echart class="echarts" ref="xctj" :subId='subId' :options="optionsxctj" id="chart_3" height="100px" width="100%" ></Echart>
                     </div>
-                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
-                      <drop :labelProperty='false' :dataList='xctj' @change="selectFnndwb"></drop>
-                   </div>
+                    <div style="width:130px;height:40px;float:left;z-index: 9999;position: absolute;right: 0px;top:20px">
+                      <drop v-if="xctj.length > 1"  :labelProperty='false' :dataList='xctj' @change="selectFnxctj"></drop>
+                      <div v-else>{{xctj0}}</div>
+                     </div>
                    
                </div>
             </div>
@@ -186,14 +235,55 @@
                 </div>
 
                 <div style="width:100%;height:100%" v-if="isPerson">
-                  <Echart class="echarts" :subId='subId' :options="optionshy" id="chart_3" height="200px" width="100%" ></Echart>
-               </div>
+                     <div style="width:100%;height:100%;position: relative;">
+                            <div style="width:100% ;height:100%;float:left">
+                                <Echart class="echarts" ref="dwhy" :subId='subId' :options="optionshy" id="chart_3" height="200px" width="100%" ></Echart>
+              
+                            </div>
+                            <div style="width:130px;height:40px;z-index: 9999;position: absolute;right:0;top:20px">
+                            <drop  v-if="dwhy.length > 1" :labelProperty='false' :dataList='dwhy' @change="selectFndwhy"></drop>
+                         </div>
+                     </div>
+                  </div>
                <div style="width:100%;height:100%;position: relative;" v-else>
                    <div style="width:45%;height:100%;float:left">
-                     <Echart :options="optionsDN" :subId='subId' class="echarts" id="chart_3" ></Echart>
+                        <div style="width:100%;height:100%;position: relative;">
+                            <div style="width:100% ;height:100%;float:left">
+                                <Echart :options="optionsDN" ref='dn' :subId='subId' class="echarts" id="chart_3" ></Echart>
+                            </div>
+                              <div style="width:80px;height:120px;z-index: 9999;position: absolute;right:0;top:40px;font-size:10px">
+                                <p v-for="(n,index) in dn" :key="index" style="clear:both;width: 100%;height:15px;overflow:hidden">
+                                    <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                                    <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
+                                </p>
+                            </div>
+                            <!-- <div style="width:130px;height:40px;z-index: 9999;position: absolute;right:0;top:20px">
+                            <drop  v-if="dn.length > 1" :labelProperty='false' :dataList='dn' @change="selectFndn"></drop>
+                         </div> -->
+                     </div>
+                     
                    </div>
                     <div style="width:45%;height:100%;float:left">
-                     <Echart :options="optionsDY" :subId='subId' class="echarts" id="chart_3" ></Echart>
+                         <div style="width:100%;height:100%;position: relative;">
+                            <div style="width:100% ;height:100%;float:left">
+                            <Echart :options="optionsDY" ref="dy" :subId='subId' class="echarts" id="chart_1" ></Echart>
+                            </div>
+                             <div style="width:80px;height:120px;z-index: 9999;position: absolute;right:0;top:40px;font-size:10px">
+                                <p v-for="(n,index) in dy" :key="index" style="clear:both;width: 100%;height:15px;overflow:hidden">
+                                    <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                                    <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
+                                </p>
+                            </div>
+                              <!-- <div style="width:20%;height:100%;float:left;margin-top:4%">
+                   <p v-for="(n,index) in dy" :key="index" style="clear:both">
+                       <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                       <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
+                   </p>
+               </div> -->
+                            <!-- <div style="width:130px;height:40px;z-index: 9999;position: absolute;right:0;top:20px">
+                            <drop  v-if="dy.length > 1"  :labelProperty='false' :dataList='dy' @change="selectFndy"></drop>
+                         </div> -->
+                     </div>
                    </div>
                    <div class="lo-title lo-title1" style="width:100%;height:40px;float:left;display:flex">
                        <div>当年</div>
@@ -207,13 +297,14 @@
                     <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_6.png" alt="">
                     惠农电商
                 </div>
-                <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                <div style="width:100%;height:100%;position: relative;">
                     <div style="width:calc(100% - 100px);height:100%;float:left">
                        <Echart class="echarts" ref="hnds" :subId='subId' :options="optionsmall" id="chart_3" height="200px" width="100%" ></Echart>
             
                     </div>
-                    <div style="width:100px;height:40px;float:left;z-index: 9999;position: absolute;right:80px;top:20px">
-                      <drop :labelProperty='false' :dataList='hnds' @change="selectFnhnds"></drop>
+                    <div style="width:130px;height:40px;float:left;z-index: 9999;position: absolute;right:0px;top:20px">
+                      <drop v-if="hnds.length > 1"  :labelProperty='false' :dataList='hnds' @change="selectFnhnds"></drop>
+                      <div v-else>{{hnds0}}</div>
                    </div>
                    
                </div>
@@ -224,7 +315,29 @@
                 <img src="https://gitee.com/meiling_wu/city/raw/57d99d5a3792198348799e170407a4ce7b9eb060/big-screen-vue-datav-master/src/assets/img/title_5.png" alt="">
                 群防群治
             </div>
-            <Echart class="echarts" :subId='subId' :options="optionsq" id="chart_3" height="200px" width="100%" ></Echart>
+               <div style="width:100%;height:100%;position: relative;" v-if="isPerson">
+                            <div style="width:100%;height:100%;float:left" >
+                                <!-- <Echart class="echarts" ref="dwhi" :subId='subId' :options="optionshy" id="chart_3" height="200px" width="100%" ></Echart> -->
+                              <Echart class="echarts" ref="qfqz" :subId='subId' :options="optionsq" id="chart_3" ></Echart>
+                            </div>
+                            <div style="width:130px;height:40px;z-index: 9999;position: absolute;right:0;top:20px" >
+                                 <drop v-if="qfqz.length > 1" :labelProperty='false' :dataList='qfqz' @change="selectFnqfqz"></drop>
+                            </div>
+                     </div>
+                     <div  style="width:100%;height:calc(100% - 35px);" v-else>
+                            <div style="width:80%;height:100%;float:left;" >
+                                <Echart class="echarts" ref="qfqz" :subId='subId' :options="optionsq" id="chart_2" height="280px" width="80%"></Echart>
+                            </div>
+                        <div style="width:20%;height:100%;float:left;margin-top:4%">
+                            <p v-for="(n,index) in qfqz" :key="index" style="clear:both">
+                                <span style="width:8px;margin-top: 5px;height:8px;float:left" :style="{'background':colorConfirm(index)}"></span>
+                                <span style="float:left;width:calc(100% - 8px);height:100%;overflow:hidden">{{n.name}}</span>
+                            </p>
+                        </div>
+                        </div>
+              
+                      
+           
         </div>
     </div>
 </div>
@@ -334,6 +447,17 @@ export default {
           ndwb:[],
           hnds:[],
           isNeed:true,
+          zdrq:[],
+          rsrq:[],
+          dn:[],
+          dy:[],
+          xfwm:[],
+          dy137:[],
+          dwhy:[],
+          qfqz:[],
+          ndwb0:'',
+         xctj0:'',
+         hnds0:''
     }
   },
   computed:{
@@ -345,12 +469,23 @@ export default {
     watch: {
         cdata(val) {
              console.log(val)
+             this.dwhy = val.hy.oData
+             this.qfqz = val.q.oData
              this.tsrq = val.d.oData
              this.ndwb = val.p.oData
              this.xctj = val.online.oData
-             
-             this.hnds = val.mall.oData
+             this.zdrq = val.d.zPerson
+             this.rsrq=val.d.rPerson
+             this.hnds = val.mall.oData 
+              this.ndwb0=  this.ndwb[0].name
+         this.xctj0=this.xctj[0].name
+         this.hnds0 = this.hnds[0].name
+
             this.orgBranch = val.allData
+            this.dy137 =val.m.oData
+            this.xfwm = val.x.oData
+            this.dy=val.hy.yueYlh
+            this.dn=val.hy.nianYlh
             this.org = val.allData.filter((v,index)=>{
                 return index > 0
             })
@@ -401,21 +536,86 @@ export default {
       
       imgLoadError(){
           this.isNeed = false
-        //console.log("999",d)
       },
       toDetailInit(init){
-     // console.log("tt",this.$refs.t,init)
-        // this.$refs.t.$children[0].$children[0].handleMapRandomSelect()
         this.getDataInit(init.unionCorpid)
       },
       selectFn(item){
           console.log("tt",item)
           this.getDataInit(item.index.unionCorpid)
       },
+      selectFndwhy(index){
+            let indexT= this.cdata.hy.oData.findIndex(v=>v.name == index.index.name)
+            this.$refs.dwhy.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+      selectFnqfqz(index){
+            let indexT= this.cdata.q.oData.findIndex(v=>v.name == index.index.name)
+            this.$refs.qfqz.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+      selectFnxfwm(index){
+            let indexT= this.cdata.x.oData.findIndex(v=>v.name == index.index.name)
+            this.$refs.xfwm.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+       selectFndy137(index){
+            let indexT= this.cdata.m.oData.findIndex(v=>v.name == index.index.name)
+            this.$refs.dy137.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+       selectFndn(index){
+       
+            let indexT= this.cdata.hy.nianYlh.findIndex(v=>v.name == index.index.name)
+            this.$refs.dn.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+       selectFndy(index){
+       
+            let indexT= this.cdata.hy.yueYlh.findIndex(v=>v.name == index.index.name)
+            this.$refs.dy.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
       selectFnPr(index){
        
             let indexT= this.cdata.d.oData.findIndex(v=>v.name == index.index.name)
             this.$refs.terq.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+      selectFnzdrq(index){
+      // val.d.zPerson
+            let indexT= this.cdata.d.zPerson.findIndex(v=>v.name == index.index.name)
+            this.$refs.zdrq.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: indexT
+            })  
+      },
+      selectFnrsrq(index){
+      // val.d.zPerson
+            let indexT= this.cdata.d.rPerson.findIndex(v=>v.name == index.index.name)
+            this.$refs.rsrq.chart.dispatchAction({
                 type: 'highlight',
                 seriesIndex: 0,
                 dataIndex: indexT
@@ -661,7 +861,7 @@ export default {
               let ndwb  = datathree.filter(val=>{return val.name == '你钉我办'})[0]
               let hnds  = datathree.filter(val=>{return val.name == '惠农电商'})[0]
               let tangj  = datathree.filter(val=>{return val.name == '乡村调解反馈'})[0]
-                 mall.xData = [];
+                mall.xData = [];
                 mall.xDataAll =[];
                 mall.oData =[]
                 hnds.list.forEach(val => {
@@ -711,7 +911,7 @@ export default {
                 hy:hy,
                 allData:this.allData.orgBranch
             }
-            console.log("fff",this.allData.orgBranch )
+         //  console.log("fff",dataA)
           this.$store.commit("setData", dataA)  
         })
     },
@@ -735,7 +935,7 @@ export default {
       this.getUserDataInfo = []
         let  first=[], second=[], three=[],detail=[]
       res.data.data.OrgStats.forEach((val,index) => {
-          val.stats = Number(val.stats).toFixed(2)
+          val.stats = Number(val.stats)
           if(index < 4){
               second.push(val)
               
@@ -858,7 +1058,6 @@ export default {
         this.optionsxctj ={
                     backgroundColor: 'transparent',
                     color:colors,
-                    // grid: {left: '4%',top:"30%",bottom: "5%",right:"4%",containLabel: true},
                      tooltip: {
                         trigger: 'item',
                         formatter: function(e){
@@ -894,30 +1093,13 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            // legend: { //图例组件，颜色和名字
-            //     left: '60%',
-            //     top: '30',
-            //     orient: 'vertical',
-            //     itemGap: 12, //图例每项之间的间隔
-            //     itemWidth: 16,
-            //     itemHeight: 12,
-
-            //     icon: 'rect',
-            //     data: val.d.xData,
-            //     textStyle: {
-            //         color: [],
-            //         fontStyle: 'normal',
-            //         fontFamily: '微软雅黑',
-            //         fontSize: 12,
-            //     }
-            // },
             series: [{
                 name:'',
                 type: 'pie',
                 clockwise: false, //饼图的扇区是否是顺时针排布
                 minAngle: 20, //最小的扇区角度（0 ~ 360）
                 center: ['50%', '50%'], //饼图的中心（圆心）坐标
-                radius: [40, 60], //饼图的半径
+                radius: [50, 80], //饼图的半径
                 avoidLabelOverlap: true, ////是否启用防止标签重叠
                 itemStyle: { //图形样式
                     normal: {
@@ -1014,30 +1196,6 @@ export default {
                         }
                     },
                     data: val.hy.yueYlh,
-                }, {
-                    name: '',
-                    type: 'pie',
-                    clockwise: false,
-                    silent: true,
-                    minAngle: 20, //最小的扇区角度（0 ~ 360）
-                    center: ['50%', '50%'], //饼图的中心（圆心）坐标
-                    radius: [0, 45], //饼图的半径
-                    itemStyle: { //图形样式
-                        normal: {
-                            borderColor: '#1e2239',
-                            borderWidth: 1.5,
-                            opacity: 0.21,
-                            color:function(e){
-                                return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                            }
-                        }
-                    },
-                    label: { //标签的位置
-                        normal: {
-                            show: false,
-                        }
-                    },
-                    data:  val.hy.yueYlh,
                 }]
             }
 
@@ -1097,30 +1255,6 @@ export default {
                         textStyle: {
                             fontWeight: 'bold'
                         }
-                    }
-                },
-                data: val.hy.nianYlh
-            }, {
-                name: '',
-                type: 'pie',
-                clockwise: false,
-                silent: true,
-                minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['30%', '50%'], //饼图的中心（圆心）坐标
-                radius: [0, 45], //饼图的半径
-                itemStyle: { //图形样式
-                    normal: {
-                        borderColor: '#1e2239',
-                        borderWidth: 1.5,
-                        opacity: 0.21,
-                         color:function(e){
-                            return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
-                        }
-                    }
-                },
-                label: { //标签的位置
-                    normal: {
-                        show: false,
                     }
                 },
                 data: val.hy.nianYlh
@@ -1253,23 +1387,7 @@ export default {
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            // legend: { //图例组件，颜色和名字
-            //     left: '60%',
-            //     top: '30',
-            //     orient: 'vertical',
-            //     itemGap: 12, //图例每项之间的间隔
-            //     itemWidth: 16,
-            //     itemHeight: 12,
-
-            //     icon: 'rect',
-            //     data:val.d.zPerson,
-            //     textStyle: {
-            //         color: [],
-            //         fontStyle: 'normal',
-            //         fontFamily: '微软雅黑',
-            //         fontSize: 12,
-            //     }
-            // },
+            
             series: [{
                 name:'',
                 type: 'pie',
@@ -1407,7 +1525,7 @@ export default {
                 avoidLabelOverlap: true, ////是否启用防止标签重叠
                 itemStyle: { //图形样式
                     normal: {
-                        borderColor: '#0035f9',
+                        borderColor: '#1e2239',
                         borderWidth: 1.5,
                         color:function(e){
                             return e.percent<3?'#0035f9':e.percent<5?'#f36f8a':e.percent<8?'#ffff43':'#25f3e6'
@@ -1457,6 +1575,7 @@ export default {
                 type: type,
                 symbol:"circle",
                 symbolSize:10,
+                radius: [50, 80], //饼图的半径
                 data: metaDate,
                 itemStyle: {
                     normal: {
@@ -1472,7 +1591,7 @@ export default {
             this.optionsmall = {
                     backgroundColor: 'transparent',
                     color:colors,
-                    grid: {left: '4%',top:"30%",bottom: "5%",right:"4%",containLabel: true},
+                    // grid: {left: '4%',top:"30%",bottom: "5%",right:"4%",containLabel: true},
                      tooltip: {
                         trigger: 'item',
                         formatter: function(e){
@@ -1510,29 +1629,13 @@ export default {
                 }
             },
             color: ['#0035f9', '#f36f8a', '#ffff43', '#25f3e6'],
-            // legend: { //图例组件，颜色和名字
-            //     left: '60%',
-            //     top: '30',
-            //     orient: 'vertical',
-            //     itemGap: 12, //图例每项之间的间隔
-            //     itemWidth: 16,
-            //     itemHeight: 12,
-            //     icon: 'rect',
-            //     data: val.mall.oData,
-            //     textStyle: {
-            //         color: [],
-            //         fontStyle: 'normal',
-            //         fontFamily: '微软雅黑',
-            //         fontSize: 12,
-            //     }
-            // },
             series: [{
                 name:'',
                 type: 'pie',
                 clockwise: false, //饼图的扇区是否是顺时针排布
                 minAngle: 20, //最小的扇区角度（0 ~ 360）
-                center: ['30%', '50%'], //饼图的中心（圆心）坐标
-                radius: [40, 60], //饼图的半径
+                center: ['50%', '50%'], //饼图的中心（圆心）坐标
+                radius: [50, 80], //饼图的半径
                 avoidLabelOverlap: true, ////是否启用防止标签重叠
                 itemStyle: { //图形样式
                     normal: {
@@ -1590,7 +1693,14 @@ export default {
             this.optionsq = {
                     backgroundColor: 'transparent',
                     color:colors,
-                    grid: {left: '4%',top:"30%",bottom: "5%",right:"4%",containLabel: true},
+                    // grid: {left: '2%',top:"30%",bottom: "5%",right:"8%",containLabel: true},
+                   grid:{
+                    x:25,
+                    y:45,
+                    x2:this.isPerson?50:100,
+                    y2:20,
+                    borderWidth:1
+                },
                      tooltip: {
                         trigger: 'item',
                         formatter: function(e){
@@ -1667,10 +1777,6 @@ export default {
                             return d[e.dataIndex]+"-"+e.data
                         }
                     },
-                    // legend: { //图例组件，颜色和名字
-                    //     show:true,
-                    //     orient: 'vertical',
-                    // },
                     xAxis: [
                         {
                             type: 'category',

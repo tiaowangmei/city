@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2021-11-30 00:25:52
+ * @LastEditTime : 2022-01-09 21:06:30
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\store\index.js
  */
@@ -19,7 +19,8 @@ export default new Vuex.Store({
       initId:'',
       subId:'',
       orgBranch:[],
-      dataId:''
+      dataId:'',
+      isClick:false
   },
   mutations: {
     setData(state,allData){
@@ -42,6 +43,9 @@ export default new Vuex.Store({
     },
     setDataId(state,id){
         state.dataId= id
+    },
+    setClick(state,isClick){
+        state.isClick= isClick
     },
   },
   actions: {

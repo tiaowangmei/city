@@ -2,7 +2,7 @@
  * @Author       : meiling.Wu
  * @Date         : 2021-10-19 14:38:50
  * @LastEditors  : meiling.Wu
- * @LastEditTime : 2022-01-08 21:35:15
+ * @LastEditTime : 2022-01-09 22:31:35
  * @Description  : 
  * @FilePath     : \big-screen-vue-datav-master\src\common\echartT\index.vue
 -->
@@ -25,7 +25,7 @@ export default {
     },
     width: {
       type: String,
-      default: '100%'
+      default: '80%'
     },
     height: {
       type: String,
@@ -53,7 +53,6 @@ export default {
   watch: {
     options: {
       handler (options) {
-        console.log("5555",this.options)
            this.chart?.setOption(options, true)
       },
       deep: true

@@ -1,7 +1,7 @@
 <template>
     <div class="zq-drop-list" @click="onDplOver($event)">
-        <span v-if="labelProperty">请选择下级机构<i></i></span>
-        <span v-else>{{choose||'请选择'}}<i></i></span>
+        <span v-if="labelProperty">请选择村社区<i></i></span>
+        <span v-else>{{choose||isQ}}<i></i></span>
         <ul class="test-1" v-if="labelProperty"  v-show="isShow">
             <li class="scrollbar-r" v-for="(item, index) in dataList" :key="index" @click="onLiClick(item, $event)">{{item.unionOrgName}}</li>
         </ul>
@@ -18,7 +18,8 @@ export default {
         return {
             activeIndex:0,
             choose:'',
-            isShow:false
+            isShow:false,
+            isQ:'请选择乡镇街道办'
         }
     },
     props:{
@@ -36,31 +37,33 @@ export default {
             default(){ return true }
         }
     },
-    // directives:{
-    //     dpl:{
-    //         bind(el){
-    //             el.style.display = "none";
-    //         }
-    //     }
-    // },
+    watch:{
+        id(v){
+            console.log("opoop",v)
+         this.isQ = v == 'ding0b3219e0d629f0acf5bf40eda33b7ba0'?'请选择乡镇街道办':'请选择村社区'
+        }
+    },
+    mounted(){
+       // if(this.dataList.length == 1) this.choose = this.dataList[0].name
+      // console.log("000000",this.$store.state.subId)
+       this.isQ = this.$store.state.initId == 'ding0b3219e0d629f0acf5bf40eda33b7ba0'?'请选择乡镇街道办':'请选择村社区'
+      // console.log("item22222222",this.dataList )
+    },
     methods:{
         onDplOver(){
-           // let ul = event.currentTarget.childNodes[1];
-            //ul.style.display = ul.style.display=="block"?ul.style.display='none':ul.style.display='block';
              this.isShow = !this.isShow
         },
         onDplOut(){
-           // let ul = event.currentTarget.childNodes[1];
-          //  ul.style.display = "none";
           this.isShow = false
         },
         onLiClick(item){
             this.choose = item.name
             this.isShow = false
-           // event.path[1].style.display = "none";
-           // this.activeIndex = index;
-           console.log("item",item)
+         
            if(this.labelProperty){
+            this.isQ = '请选择村社区'
+              //console.log("item", this.isQ )
+              this.$store.commit("setClick",true)
              this.$emit("change", {
                 index:item
             })
@@ -75,6 +78,10 @@ export default {
     computed:{
         dplLable(){
             return this.dataList[this.activeIndex][this.labelProperty]
+        },
+        
+        id(){
+            return this.$store.state.initId
         }
     }
 }
@@ -115,7 +122,7 @@ export default {
             border: 1px solid #034c6a;
             border-radius: 4px;
             overflow: hidden;
-            max-height: 280px;
+            max-height: 180px;
             cursor: pointer;
              width: 100%;
              z-index: 999;
